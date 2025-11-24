@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AngelFly - Driver Dashboard</title>
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Bootstrap Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"/>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat' !important; }
+
+    :root{
+      --bg:#f3f1f0; --panel:#fff; --muted:#f0efef;
+      --text:#111827; --primary:#ff7a18; --primary-dark:#ea580c;
+      --sidebar-item:#fff; --sidebar-active:#e9e9e9;
+      --radius-xl:14px; --radius-lg:10px;
+    }
+
+    body { background:var(--bg); color:var(--text); }
+    .app-shell{ min-height:100vh; display:flex; flex-direction:column; }
+
+    .topbar{
+      background:var(--panel); border-bottom:1px solid #e5e7eb;
+      padding:20px 22px; display:flex; align-items:center; justify-content:space-between;
+    }
+    .brand img{ height:7rem; object-fit:contain; }
+
+    .content-wrap{
+      flex:1; width:100% !important; display:flex; justify-content:center;
+      grid-template-columns:220px 1fr; gap:18px; padding:22px;
+    }
+
+    .sidebar{ background:transparent; padding-top:8px; width:30%; }
+    .sidebar-card{ background:transparent; display:flex; flex-direction:column; gap:10px; }
+    .sidebar-item{
+      background:var(--sidebar-item); border-radius:8px; padding:12px 14px; font-size:14px;
+      display:flex; align-items:center; justify-content:space-between; border:1px solid #eee;
+    }
+    .sidebar-item.active{ background:var(--sidebar-active); font-weight:600; }
+
+    .main-panel{
+      background:var(--panel); border-radius:var(--radius-xl);
+      padding:25px 18px; width:100%; box-shadow:0 1px 0 rgba(0,0,0,0.03);
+      display:flex; flex-direction:column; height:fit-content; gap:14px;
+    }
+    .panel-header{
+      background:var(--muted); border-radius:10px; padding:14px 16px;
+      display:flex; align-items:center; justify-content:space-between; font-size:15px; font-weight:600;
+    }
+
+    .table-card{
+      background:var(--panel); border:1px solid #eee; border-radius:var(--radius-lg);
+      padding:12px; position:relative;
+    }
+    .table-head{
+      display:grid; grid-template-columns:140px 190px 1fr 160px;
+      gap:1rem; font-size:13px; font-weight:700; padding:10px 12px;
+    }
+    .table-body{ max-height:340px; overflow-y:scroll; padding:6px 4px; }
+    .row-item{
+      display:grid; grid-template-columns:140px 190px 1fr 160px; align-items:center;
+      padding:20px 12px; margin:6px 6px; border-radius:8px; background:#f0efef; font-size:14px;
+      gap:1rem;
+    }
+    .row-item:nth-child(even){ background:#fff; }
+    .row-item .value{ text-align:right; font-weight:700; }
+
+    .panel-footer{
+      display:flex; justify-content:flex-end; align-items:center; gap:12px; padding-top:10px;
+    }
+    .month-select{
+      background:var(--panel); border:1px solid #e5e7eb; border-radius:8px;
+      padding:10px 12px; font-size:14px; min-width:120px;
+    }
+    .btn-generate{
+      background:var(--primary); border:none; color:#fff; border-radius:8px; font-weight:700;
+      padding:10px 18px; font-size:14px;
+    }
+    .btn-generate:hover{ background:var(--primary-dark); }
+
+    .panel-loading{
+      position:absolute; inset:0; background:rgba(255,255,255,0.7);
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      gap:10px; border-radius:var(--radius-lg); z-index:10;
+    }
+
+    @media (max-width:900px){
+      .content-wrap{ grid-template-columns:1fr; }
+      .sidebar{ order:2; }
+      .panel-header{ flex-direction:column; align-items:flex-start; gap:6px; }
+      .table-head,.row-item{ grid-template-columns:120px 160px 1fr 120px; }
+    }
+    @media(max-width:768px)
+{
+    .table-card
+{
+    overflow: auto !important;
+}
+
+.table-body
+{
+    overflow-y: initial !important;
+}
+.row-item
+{
+    background:#fff !important;
+}
+.sidebar
+{
+    display: none !important;
+}
+.topbar .container
+{
+    flex-direction: column !important;
+    gap: 10px !important;
+}
+}
+    
+  </style>
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- TOPBAR -->
+    <header class="topbar">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="brand">
+          <img src="img/logo-angel.png" alt="AngelFly Logo" onerror="this.style.display='none'"/>
+        </div>
+
+        <div class="topbar-right d-flex align-items-center gap-3" style="font-size:14px;font-weight:500;">
+          <div class="topbar-user d-flex align-items-center gap-2">
+            <i class="bi bi-person"></i>
+            <span id="topUserName">Carregando...</span>
+          </div>
+          <a style="cursor:pointer;text-decoration:none;color:#111" onclick="handleLogout()">Log out</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="content-wrap container">
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-item active">
+            <div class="left"><span>Driver Dashboard</span></div>
+            <i class="bi bi-truck"></i>
+          </div>
+        </div>
+      </aside>
+
+      <!-- MAIN PANEL -->
+      <div class="d-flex flex-column align-items-end" style="width:100%;">
+        <main class="main-panel">
+
+          <div class="panel-header">
+            <div>
+              Driver: <span id="driverName" class="muted">Loading...</span>
+            </div>
+            <div>
+              Total Earnings of <span id="monthLabel">--</span>:
+              <span id="monthTotal">$0.00</span>
+            </div>
+          </div>
+
+          <section class="table-card" id="tableCard">
+            <div class="table-head">
+              <div>Order Code:</div>
+              <div>Day:</div>
+              <div>Customer:</div>
+              <div style="text-align:right;">Driver Total:</div>
+            </div>
+
+            <div id="tableBody" class="table-body"></div>
+
+            <div id="panelLoading" class="panel-loading" style="display:none;">
+              <div class="spinner-border text-warning" role="status"></div>
+              <small class="text-muted">Loading orders...</small>
+            </div>
+          </section>
+
+        </main>
+
+        <div class="panel-footer">
+          <select id="monthSelect" class="month-select" onchange="changeMonth()"></select>
+
+          <button class="btn-generate" onclick="exportCSV()">
+            Generate CSV
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  const REPORT_API_URL = "/api/report/driver/month";
+
+  let CURRENT_DRIVER_MATCH_ID = null;
+  let CURRENT_ROLE = null;
+
+  const ORDERS_CACHE = {};
+
+  function toYYYYMM(dateObj){
+    const y = dateObj.getFullYear();
+    const m = String(dateObj.getMonth()+1).padStart(2, "0");
+    return `${y}-${m}`;
+  }
+  function toMMYYYY(yyyymm){
+    const [y, m] = yyyymm.split("-");
+    return `${m}/${y}`;
+  }
+  function fromMMYYYY(mmyyyy){
+    const [m, y] = mmyyyy.split("/");
+    return `${y}-${m}`;
+  }
+  function monthLabelPT(mmyyyy){
+    const [m, y] = mmyyyy.split("/").map(Number);
+    const d = new Date(y, m-1, 1);
+    return d.toLocaleDateString("pt-BR", { month:"short" }).replace(".", "");
+  }
+  function showPanelLoading(show){
+    document.getElementById("panelLoading").style.display = show ? "flex" : "none";
+  }
+  function safeGet(obj, path, fallback=null){
+    try{
+      return path.split(".").reduce((o, k)=>o?.[k], obj) ?? fallback;
+    }catch(e){ return fallback; }
+  }
+
+  // pega número robusto do Notion
+  function getNotionNumber(props, key){
+    const p = props?.[key];
+    if(!p) return null;
+
+    if(p.type === "formula") return p.formula?.number ?? null;
+    if(p.type === "number") return p.number ?? null;
+
+    if(p.type === "rollup"){
+      const arr = p.rollup?.array;
+      if(Array.isArray(arr) && arr[0]){
+        const first = arr[0];
+        if(first.type === "number") return first.number ?? null;
+        if(first.type === "formula") return first.formula?.number ?? null;
+        if(first.type === "unique_id") return first.unique_id?.number ?? null;
+      }
+    }
+    return null;
+  }
+
+  function coerceNumber(v){
+    if(v == null) return 0;
+    if(typeof v === "number" && Number.isFinite(v)) return v;
+
+    if(typeof v === "string"){
+      const cleaned = v.replace(/\./g, "").replace(",", ".").replace(/[^\d.-]/g, "");
+      const n = Number(cleaned);
+      return Number.isFinite(n) ? n : 0;
+    }
+    return 0;
+  }
+
+  function normalizeDriverOrder(order){
+    const props = order.properties || {};
+
+    const code =
+      safeGet(props, 'Order Number: .title.0.plain_text') ||
+      safeGet(props, 'Order Number: .title.0.text.content') ||
+      order.id || "--";
+
+    const customer =
+      safeGet(props, 'Customer Name.rollup.array.0.title.0.plain_text') ||
+      safeGet(props, 'Customer Name.rollup.array.0.title.0.text.content') ||
+      safeGet(props, '👥 Custumer Name: .rich_text.0.plain_text') ||
+      "--";
+
+    const createdISO =
+      safeGet(props, 'Order Placement DateTime.created_time') ||
+      safeGet(props, 'Created time.created_time') ||
+      order.created_time;
+
+    const created_ts = createdISO ? new Date(createdISO).getTime() : 0;
+
+    const day = createdISO
+      ? new Date(createdISO).toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" })
+      : "--";
+
+    // 🔥 valor do driver
+    const candidates = [
+      "Driver Total Oficial:",   // chave exata
+      "Driver Total Oficial",
+      "Formula Payment Driver",
+      "Driver Total Paid Manual",
+      "Fórmula 1"
+    ];
+
+    let valueRaw = null;
+    for(const k of candidates){
+      const n = getNotionNumber(props, k);
+      if(n != null){
+        valueRaw = n;
+        break;
+      }
+    }
+
+    const value = coerceNumber(valueRaw);
+
+    return { code, day, customer, value, created_ts };
+  }
+
+  // INIT
+  document.addEventListener("DOMContentLoaded", async () => {
+    buildMonthSelect();
+    await loadUserContext();
+    await generateReport(true);
+  });
+
+  function buildMonthSelect(){
+    const select = document.getElementById("monthSelect");
+    select.innerHTML = "";
+    const now = new Date();
+
+    for(let i=0;i<12;i++){
+      const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
+      const yyyymm = toYYYYMM(d);
+      const mmyyyy = toMMYYYY(yyyymm);
+
+      const opt = document.createElement("option");
+      opt.value = mmyyyy;
+      opt.textContent = mmyyyy;
+      if(i===0) opt.selected = true;
+      select.appendChild(opt);
+    }
+  }
+
+  async function loadUserContext(){
+    const res = await fetch("/api/user/context", { credentials:"include" });
+    if(!res.ok) {
+      document.getElementById("topUserName").textContent = "Erro";
+      document.getElementById("driverName").textContent = "Erro";
+      return;
+    }
+
+    const ctx = await res.json();
+
+    CURRENT_ROLE = ctx?.user?.role || null;
+    CURRENT_DRIVER_MATCH_ID = ctx?.driver?.driver_match_id || null;
+
+    const displayName =
+      ctx?.driver?.driver_name ||
+      ctx?.user?.name ||
+      ctx?.user?.email ||
+      "Driver";
+
+    document.getElementById("topUserName").textContent = displayName;
+    document.getElementById("driverName").textContent = displayName;
+  }
+
+  function renderTableRows(rows, mmyyyy){
+    const body = document.getElementById("tableBody");
+
+    if(rows.length === 0){
+      body.innerHTML = `
+        <div class="p-3 text-muted" style="font-size:14px;">
+          No order found in this month.
+        </div>
+      `;
+    }else{
+      body.innerHTML = rows.map(r => `
+        <div class="row-item">
+          <div>${r.code}</div>
+          <div>${r.day}</div>
+          <div>${r.customer}</div>
+          <div class="value">$${r.value.toFixed(2)}</div>
+        </div>
+      `).join("");
+    }
+
+    const total = rows.reduce((acc, r)=>acc + r.value, 0);
+    document.getElementById("monthTotal").textContent = `$${total.toFixed(2)}`;
+    document.getElementById("monthLabel").textContent = monthLabelPT(mmyyyy);
+  }
+
+  async function changeMonth(){
+    const mmyyyy = document.getElementById("monthSelect").value;
+    if(ORDERS_CACHE[mmyyyy]){
+      renderTableRows(ORDERS_CACHE[mmyyyy], mmyyyy);
+    }else{
+      await generateReport(true);
+    }
+  }
+
+  async function generateReport(isAuto=false){
+    const mmyyyy = document.getElementById("monthSelect").value;
+    const month = fromMMYYYY(mmyyyy);
+
+    if(!CURRENT_DRIVER_MATCH_ID){
+      if(!isAuto) alert("Match ID do driver não encontrado.");
+      return;
+    }
+
+    showPanelLoading(true);
+
+    try{
+      const res = await fetch(REPORT_API_URL, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        credentials:"include",
+        body: JSON.stringify({ month })
+      });
+
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); } catch(e){ data = null; }
+
+      let rawList;
+      if (Array.isArray(data)) rawList = data;
+      else if (data?.items && Array.isArray(data.items)) rawList = data.items;
+      else if (data?.object === "page") rawList = [data];
+      else if (data?.json?.object === "page") rawList = [data.json];
+      else rawList = [];
+
+      const pages = rawList.map(x => x?.json ?? x);
+
+      const norm = pages.map(normalizeDriverOrder);
+
+      // ✅ ordena por mais recente
+      norm.sort((a,b) => (b.created_ts||0) - (a.created_ts||0));
+
+      const rounded = norm.map(o => ({ ...o, value: Number(o.value.toFixed(2)) }));
+
+      ORDERS_CACHE[mmyyyy] = rounded;
+      renderTableRows(rounded, mmyyyy);
+
+    } catch(e){
+      ORDERS_CACHE[mmyyyy] = [];
+      renderTableRows([], mmyyyy);
+      if(!isAuto) alert("Erro ao carregar relatório do driver.");
+    } finally {
+      showPanelLoading(false);
+    }
+  }
+
+  // EXPORT CSV
+  function csvEscape(val){
+    const s = String(val ?? "");
+    if(/[",\n;]/.test(s)) return `"${s.replace(/"/g, '""')}"`;
+    return s;
+  }
+
+  function exportCSV(){
+    const mmyyyy = document.getElementById("monthSelect").value;
+    const rows = ORDERS_CACHE[mmyyyy] || [];
+    if(!rows.length){
+      alert("Não tem pedidos nesse mês para exportar.");
+      return;
+    }
+
+    const header = ["Order Code", "Day", "Customer", "Driver Total"];
+
+    const lines = [
+      header.join(","),
+      ...rows.map(r => ([
+        csvEscape(r.code),
+        csvEscape(r.day),
+        csvEscape(r.customer),
+        csvEscape(Number(r.value).toFixed(2))
+      ]).join(","))
+    ];
+
+    const csvContent = "\uFEFF" + lines.join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `angelFly_driver_${mmyyyy.replace("/", "-")}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  async function handleLogout(){
+    try{
+      await fetch("/api/logout", { method:"POST", credentials:"include" });
+      window.location.href = "/login-driver.html";
+    }catch(e){
+      window.location.href = "/login-driver.html";
+    }
+  }
+</script>
+</body>
+</html>
