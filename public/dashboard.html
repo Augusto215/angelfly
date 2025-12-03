@@ -443,6 +443,8 @@
     async function initDashboard(){
       await loadUserContext();
       buildWeekSelect();
+      // render after resize toggle possibility
+      window.addEventListener('resize', () => renderTableRows(CURRENT_ROWS, CURRENT_WEEK_LABEL));
       await generateReportForSelectedWeek(true);
     }
 
@@ -540,8 +542,25 @@
       return s.slice(0, 6) + "...";
     }
 
+    // escape helper
+    function escapeHtml(s){
+      return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    // truncate helper (default 10 chars)
+    function truncateText(s, max = 10){
+      if(s == null || s === "") return "--";
+      const str = String(s);
+      return str.length > max ? str.slice(0, max) + "..." : str;
+    }
+
+    // returns true if viewport is mobile (matches CSS breakpoint)
+    function isMobileViewport(){
+      return window.matchMedia && window.matchMedia('(max-width:768px)').matches;
+    }
+
     // -----------------------------
-    // RENDER
+    // RENDER (truncates customer > 10 chars only on mobile)
     // -----------------------------
     function renderTableRows(rows, weekLabel){
       const body = document.getElementById("tableBody");
@@ -553,34 +572,43 @@
           </div>
         `;
       } else {
-        body.innerHTML = rows.map(r => `
+        const mobile = isMobileViewport();
+
+        body.innerHTML = rows.map(r => {
+          const fullCustomer = r.customer || "--";
+          const displayCustomer = mobile ? truncateText(fullCustomer, 10) : fullCustomer;
+
+          return `
           <div class="row-item">
             <div>
               <span class="row-label">Order:</span>
               <span
                 class="row-value order-code"
-                title="${(r.code || "").toString().replace(/"/g, '&quot;')}"
+                title="${escapeHtml(String(r.code || ""))}"
               >
-                ${formatOrderCode(r.code)}
+                ${escapeHtml(formatOrderCode(r.code))}
               </span>
             </div>
             <div>
               <span class="row-label">Day:</span>
-              <span class="row-value">${r.day}</span>
+              <span class="row-value">${escapeHtml(r.day)}</span>
             </div>
             <div class="customer">
               <span class="row-label">Customer:</span>
-              <span class="row-value">${r.customer}</span>
+              <span class="row-value" title="${escapeHtml(fullCustomer)}">
+                ${escapeHtml(displayCustomer)}
+              </span>
             </div>
             <div class="value">
               <span class="row-label">Value:</span>
-              <span class="row-value">$${r.value.toFixed(2)}</span>
+              <span class="row-value">$${Number(r.value||0).toFixed(2)}</span>
             </div>
           </div>
-        `).join("");
+          `;
+        }).join("");
       }
 
-      const total = rows.reduce((acc, r)=>acc + r.value, 0);
+      const total = (rows || []).reduce((acc, r)=>acc + (Number(r.value)||0), 0);
       document.getElementById("weekTotal").textContent = `$${total.toFixed(2)}`;
       document.getElementById("weekLabel").textContent = weekLabel || "--";
     }
@@ -862,7 +890,7 @@
 
     // -----------------------------
     // LOGOUT
-    // -----------------------------table-card
+    // -----------------------------
     async function handleLogout(){
       try{
         await fetch("/api/logout", { method:"POST", credentials:"include" });

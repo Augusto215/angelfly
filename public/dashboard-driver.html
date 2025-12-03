@@ -10,7 +10,7 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
-    <link rel="icon" type="image/x-icon" href="img/logo-angel (1) (1).ico" />
+  <link rel="icon" type="image/x-icon" href="img/logo-angel (1) (1).ico" />
 
   <!-- Bootstrap Icons -->
   <link
@@ -361,6 +361,23 @@
       try{ return path.split(".").reduce((o,k)=>o?.[k], obj) ?? fallback; }catch(e){ return fallback; }
     }
 
+    // escape helper
+    function escapeHtml(s){
+      return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+    }
+
+    // truncate helper (default 10 chars)
+    function truncateText(s, max = 10){
+      if(s == null || s === "") return "--";
+      const str = String(s);
+      return str.length > max ? str.slice(0, max) + "..." : str;
+    }
+
+    // returns true if viewport is mobile (matches CSS breakpoint)
+    function isMobileViewport(){
+      return window.matchMedia && window.matchMedia('(max-width:768px)').matches;
+    }
+
     // -----------------------------
     // WEEK SELECT (Mon-Sun anchor) - builds last 12 weeks
     // -----------------------------
@@ -409,6 +426,11 @@
       await loadUserContext();
       buildWeekSelect();
       await generateReport(true);
+
+      // re-render on resize so truncation toggles when switching between mobile/desktop
+      window.addEventListener('resize', () => {
+        renderTableRows(CURRENT_ROWS, CURRENT_WEEK_LABEL);
+      });
     });
 
     // -----------------------------
@@ -581,7 +603,7 @@
     }
 
     // -----------------------------
-    // RENDER TABLE ROWS
+    // RENDER TABLE ROWS (truncates customer only on mobile)
     // -----------------------------
     function renderTableRows(rows, weekLabel){
       const body = document.getElementById("tableBody");
@@ -597,33 +619,36 @@
         return;
       }
 
-      body.innerHTML = rows.map(r => `
-        <div class="row-item" title="${escapeHtml(r.code)}">
-          <div>
-            <span class="row-label">Order:</span>
-            <span class="row-value order-code">${escapeHtml(formatOrderCodeTrunc(r.code))}</span>
+      const mobile = isMobileViewport();
+
+      body.innerHTML = rows.map(r => {
+        const fullCustomer = r.customer || "--";
+        const displayCustomer = mobile ? truncateText(fullCustomer, 10) : fullCustomer;
+
+        return `
+          <div class="row-item" title="${escapeHtml(r.code)}">
+            <div>
+              <span class="row-label">Order:</span>
+              <span class="row-value order-code">${escapeHtml(formatOrderCodeTrunc(r.code))}</span>
+            </div>
+            <div>
+              <span class="row-label">Day:</span>
+              <span class="row-value">${escapeHtml(r.day)}</span>
+            </div>
+            <div class="customer">
+              <span class="row-label">Customer:</span>
+              <span class="row-value" title="${escapeHtml(fullCustomer)}">${escapeHtml(displayCustomer)}</span>
+            </div>
+            <div class="value">
+              <span class="row-label">Value:</span>
+              <span class="row-value">$${Number(r.value||0).toFixed(2)}</span>
+            </div>
           </div>
-          <div>
-            <span class="row-label">Day:</span>
-            <span class="row-value">${escapeHtml(r.day)}</span>
-          </div>
-          <div class="customer">
-            <span class="row-label">Customer:</span>
-            <span class="row-value">${escapeHtml(r.customer)}</span>
-          </div>
-          <div class="value">
-            <span class="row-label">Value:</span>
-            <span class="row-value">$${Number(r.value||0).toFixed(2)}</span>
-          </div>
-        </div>
-      `).join("");
+        `;
+      }).join("");
 
       const total = rows.reduce((acc, r) => acc + (Number(r.value)||0), 0);
       document.getElementById("weekTotal").textContent = `$${total.toFixed(2)}`;
-    }
-
-    function escapeHtml(s){
-      return String(s ?? "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
     }
 
     // -----------------------------
