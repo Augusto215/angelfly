@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proposta Comercial - CGRabbit</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+        }
+        
+        .page {
+            min-height: 100vh;
+            padding: 60px;
+            position: relative;
+            background: white;
+            margin-bottom: 2px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .page-number {
+            position: absolute;
+            top: 40px;
+            right: 60px;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            font-size: 18px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 60px;
+        }
+        
+        .logo svg {
+            width: 40px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo-text {
+            font-size: 24px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
+        
+        h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1;
+            margin-bottom: 40px;
+            color: #1a1a1a;
+        }
+        
+        h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #1a1a1a;
+        }
+        
+        h3 {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 30px 0 15px;
+        }
+        
+        h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 20px 0 10px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+        
+        .intro-text {
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .footer {
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            right: 60px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .methodology-item {
+            padding: 30px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+        
+        .methodology-item h3 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .methodology-number {
+            font-size: 36px;
+            font-weight: 900;
+            margin-right: 15px;
+            color: #333;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 60px;
+            margin-top: 40px;
+        }
+        
+        .service-category h3 {
+            font-size: 28px;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .service-item {
+            margin-bottom: 25px;
+        }
+        
+        .service-item h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .service-item p {
+            font-size: 14px;
+            color: #666;
+            margin-left: 25px;
+        }
+        
+        .arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 6px solid #333;
+            border-top: 4px solid transparent;
+            border-bottom: 4px solid transparent;
+            margin-right: 12px;
+            transform: rotate(45deg);
+        }
+        
+        .projects-showcase {
+            margin-top: 40px;
+        }
+        
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        .project-item {
+            background: #f0f0f0;
+            border-radius: 8px;
+            padding: 20px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            color: #666;
+        }
+        
+        .project-item.large {
+            grid-column: span 2;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #0066ff;
+            color: white;
+            padding: 15px 40px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        
+        .cta-button:hover {
+            background: #0052cc;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .feature-card {
+            padding: 30px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .feature-card h4 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .feature-card p {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .guarantee-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+        
+        .guarantee-item {
+            padding: 30px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+        
+        .project-details {
+            background: #f8f8f8;
+            padding: 40px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .project-details h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .project-details ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .project-details li {
+            margin-bottom: 12px;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .project-details li:before {
+            content: "•";
+            position: absolute;
+            left: 8px;
+            color: #0066ff;
+            font-weight: bold;
+        }
+        
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .timeline-item {
+            padding: 30px 20px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .timeline-item h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #0066ff;
+        }
+        
+        .timeline-item ul {
+            list-style: none;
+            padding: 0;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .timeline-item li {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .timeline-item li:before {
+            content: "";
+            position: absolute;
+            left: 5px;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            background: #0066ff;
+            border-radius: 50%;
+        }
+        
+        .timeline-duration {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #ddd;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .pricing-table {
+            background: #f8f8f8;
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 40px;
+        }
+        
+        .pricing-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        .pricing-row:last-child {
+            border-bottom: none;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #333;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .pricing-label {
+            flex: 1;
+        }
+        
+        .pricing-value {
+            text-align: right;
+            font-weight: 600;
+        }
+        
+        .discount-badge {
+            display: inline-block;
+            background: #0066ff;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+        
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .payment-method {
+            padding: 25px;
+            background: #f8f8f8;
+            border-radius: 8px;
+        }
+        
+        .payment-method h4 {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .payment-icon {
+            width: 24px;
+            height: 24px;
+            background: #333;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .next-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .step-card {
+            padding: 30px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: #0066ff;
+            color: white;
+            border-radius: 50%;
+            line-height: 40px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        @media print {
+            .page {
+                page-break-after: always;
+                box-shadow: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .page {
+                padding: 30px;
+            }
+            
+            h1 {
+                font-size: 48px;
+            }
+            
+            h2 {
+                font-size: 32px;
+            }
+            
+            .methodology-grid,
+            .services-grid,
+            .features-grid,
+            .guarantee-grid,
+            .timeline,
+            .payment-methods,
+            .next-steps {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .project-item.large {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Página 1 -->
+        <div class="page">
+            <div class="page-number">01</div>
+            <div class="logo">
+                <svg viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5 C10 5, 5 15, 5 25 C5 35, 10 45, 20 45 C30 45, 35 35, 35 25 C35 15, 30 5, 20 5 Z" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+                    <circle cx="15" cy="20" r="3" fill="#1a1a1a"/>
+                    <circle cx="25" cy="20" r="3" fill="#1a1a1a"/>
+                    <path d="M10 8 L10 2 M30 8 L30 2" stroke="#1a1a1a" stroke-width="2"/>
+                </svg>
+                <span class="logo-text">CGRABBIT</span>
+            </div>
+            
+            <h1>Proposta Comercial</h1>
+            
+            <div class="intro-text">
+                <p>A CGRabbit nasceu para transformar marcas e negócios através do desenvolvimento web e do design estratégico.</p>
+                
+                <p>Nossa missão é criar soluções digitais que não apenas impressionam visualmente, mas que também geram resultados reais para nossos clientes. Com um time especializado em Web Design e Design de Brand, trabalhamos com processos bem estruturados e metodologia validada, garantindo um alto nível de qualidade e eficiência em cada entrega.</p>
+                
+                <p>Nesta proposta, apresentamos a estrutura do nosso trabalho, diferenciais, garantias e valores, para que você tenha uma visão clara de como podemos ajudar sua empresa a alcançar novos patamares no digital.</p>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados. 52.035.198/0001-42</span>
+                <span>cgrabbit.com.br</span>
+            </div>
+        </div>
+        
+        <!-- Página 2 -->
+        <div class="page">
+            <div class="page-number">02</div>
+            
+            <h2>Nossa Metodologia</h2>
+            
+            <div class="methodology-grid">
+                <div class="methodology-item">
+                    <h3>
+                        <span class="methodology-number">01.</span>
+                        Mapeamento
+                    </h3>
+                    <p>Nesta fase, realizamos um diagnóstico completo do seu projeto. Analisamos o mercado, concorrência, público-alvo e as necessidades específicas do seu negócio.</p>
+                    <p>O objetivo é compreender o que pode ser aprimorado e quais são as oportunidades estratégicas para destacar sua marca.</p>
+                </div>
+                
+                <div class="methodology-item">
+                    <h3>
+                        <span class="methodology-number">2.</span>
+                        Estratégia
+                    </h3>
+                    <p>Com base nas informações coletadas, elaboramos um plano estratégico para o desenvolvimento do seu site, loja virtual ou identidade visual.</p>
+                    <p>Definimos a arquitetura da informação, a identidade visual e os principais elementos que tornarão sua presença digital única e eficaz.</p>
+                </div>
+                
+                <div class="methodology-item">
+                    <h3>
+                        <span class="methodology-number">3.</span>
+                        Criação & Desenvolvimento
+                    </h3>
+                    <p>Aqui, colocamos a estratégia em ação! Desenvolvemos o design e o código de forma estruturada, priorizando a experiência do usuário, performance, responsividade e otimização para mecanismos de busca (SEO).</p>
+                    <p>No caso de identidade visual, criamos todos os elementos gráficos necessários para garantir uma marca forte e coesa.</p>
+                </div>
+                
+                <div class="methodology-item">
+                    <h3>
+                        <span class="methodology-number">4.</span>
+                        Lançamento
+                    </h3>
+                    <p>Após a finalização do projeto, fazemos testes rigorosos para garantir a melhor performance. Além disso, realizamos o lançamento estratégico da solução, oferecendo suporte inicial e, se necessário, treinamentos para que sua equipe possa operar a plataforma com autonomia.</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 3 -->
+        <div class="page">
+            <div class="page-number">03</div>
+            
+            <h2>Nossos Serviços</h2>
+            
+            <div class="services-grid">
+                <div class="service-category">
+                    <h3>Desenvolvimento Web</h3>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> Landing Pages</h4>
+                        <p>Páginas de alta conversão focadas em campanhas de marketing.</p>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> Sites Institucionais</h4>
+                        <p>Sites completos para fortalecer a presença digital da sua marca.</p>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> Sistemas, Integrações e IA</h4>
+                        <p>Soluções sob medida para necessidades específicas.</p>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> E-commerce & Loja Virtual</h4>
+                        <p>Lojas online otimizadas para vendas e conversões.</p>
+                    </div>
+                </div>
+                
+                <div class="service-category">
+                    <h3>Design & Branding</h3>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> Identidade Visual Completa</h4>
+                        <p>Criação ou reformulação de marca com guias visuais e aplicações.</p>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> Diagramação</h4>
+                        <p>Layouts profissionais para apresentações, e-books e materiais institucionais.</p>
+                    </div>
+                    
+                    <div class="service-item">
+                        <h4><span class="arrow"></span> Design para Redes Sociais</h4>
+                        <p>Criativos para campanhas, posts e anúncios com identidade personalizada.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 4 -->
+        <div class="page">
+            <div class="page-number">04</div>
+            
+            <h2>Projetos Recentes</h2>
+            
+            <div class="project-grid">
+                <div class="project-item large">
+                    <div>
+                        <h3>Página de Vendas</h3>
+                        <p>Seu assistente de investimentos no WhatsApp</p>
+                    </div>
+                </div>
+                <div class="project-item">Fim do Mundo - Experiências</div>
+                <div class="project-item">Restaurante Premium</div>
+                <div class="project-item">CGRabbit Website</div>
+                <div class="project-item">Locvit Imóveis</div>
+                <div class="project-item">E-commerce Fashion</div>
+                <div class="project-item">Portal Institucional</div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <p style="font-size: 18px; margin-bottom: 20px;">
+                    <span class="arrow"></span> Confira nossos projetos completos:
+                </p>
+                <a href="https://www.cgrabbit.com.br" class="cta-button">www.cgrabbit.com.br</a>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 5 -->
+        <div class="page">
+            <div class="page-number">05</div>
+            
+            <h2>Diferenciais da CGRabbit</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>Metodologia validada</h4>
+                    <p>Nosso processo garante entregas de alta qualidade e alinhadas aos objetivos do cliente.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Foco em conversão e performance</h4>
+                    <p>Não criamos apenas sites bonitos, mas plataformas que vendem e geram resultados reais.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Design estratégico</h4>
+                    <p>Identidades visuais e interfaces pensadas para engajamento e diferenciação no mercado.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Tecnologia e inovação</h4>
+                    <p>Utilizamos as melhores tecnologias para garantir segurança, velocidade e eficiência.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>Atendimento personalizado</h4>
+                    <p>Suporte próximo e comunicação clara para um desenvolvimento sem complicações.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <h4>SEO e UX otimizados</h4>
+                    <p>Projetamos cada solução para melhor ranqueamento no Google e experiência intuitiva para os usuários.</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 6 -->
+        <div class="page">
+            <div class="page-number">06</div>
+            
+            <h2>Garantias</h2>
+            
+            <div class="guarantee-grid">
+                <div class="guarantee-item">
+                    <h4>Entrega dentro do prazo estipulado</h4>
+                    <p>Cumprimos rigorosamente nossos prazos de desenvolvimento.</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <h4>Suporte inicial após a entrega</h4>
+                    <p>Oferecemos um período de suporte de 60 dias sem custo para ajustes e dúvidas.</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <h4>Código otimizado e responsivo</h4>
+                    <p>Sites rápidos, seguros e adaptados para todos os dispositivos.</p>
+                </div>
+                
+                <div class="guarantee-item">
+                    <h4>Material original e exclusivo</h4>
+                    <p>Criações personalizadas e únicas para cada cliente.</p>
+                </div>
+                
+                <div class="guarantee-item" style="grid-column: span 2;">
+                    <h4>Treinamento básico (se necessário)</h4>
+                    <p>Tutoriais Gravados em Drive para que sua equipe possa operar o sistema ou site com autonomia.</p>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 7 -->
+        <div class="page">
+            <div class="page-number">07</div>
+            
+            <h2>Detalhes do Projeto</h2>
+            
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 40px; margin-top: 30px;">
+                <div>
+                    <h3>01. Dados</h3>
+                    <div style="background: #f8f8f8; padding: 20px; border-radius: 8px;">
+                        <p><strong>Nº Orçamento:</strong> 281025004</p>
+                        <p><strong>Dados do Cliente</strong></p>
+                        <p>Nome: Gabriel Pereira</p>
+                        <p>Telefone: +1 (786) 658-3767</p>
+                        <p>CNPJ: -</p>
+                        <p>E-mail: -</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3>02. Descrição</h3>
+                    <div class="project-details">
+                        <h4>Projeto: Implementação de Tema WordPress, Melhorias de UI/UX e Rebranding (Ernesto's Northend)</h4>
+                        
+                        <h4>Visão Geral do Projeto</h4>
+                        <p>O presente projeto detalha a revitalização da presença digital da Ernesto's Northend. O objetivo principal é implementar um tema WordPress (Envato) profissional, realizando melhorias significativas de UI/UX para modernizar a plataforma.</p>
+                        
+                        <h4>Escopo Técnico</h4>
+                        
+                        <h5>Fase I - Estratégia, Rebranding e Planejamento de UI/UX</h5>
+                        <ul>
+                            <li>1.1. Briefing e Alinhamento Estratégico</li>
+                            <li>1.2. (NOVO) Rebranding e Identidade Visual</li>
+                            <li>1.3. (NOVO) Análise de UI/UX e Arquitetura</li>
+                            <li>1.4. Prototipagem (Figma)</li>
+                            <li>1.5. Estruturação do Conteúdo</li>
+                        </ul>
+                        
+                        <h5>Fase II - Desenvolvimento Técnico</h5>
+                        <ul>
+                            <li>2.1. Configuração do Ambiente WordPress</li>
+                            <li>2.2. (NOVO) Implementação e Customização do Tema</li>
+                            <li>2.3. Configuração de Funcionalidades</li>
+                        </ul>
+                        
+                        <h5>Fase III - Otimização (SEO, Testes e Revisão)</h5>
+                        <ul>
+                            <li>3.1. Implementação de SEO On-Page</li>
+                            <li>3.2. Testes Funcionais e de Usabilidade</li>
+                            <li>3.3. Otimização de Performance</li>
+                            <li>3.4. Rodada de Revisão e Go-Live</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 40px;">
+                <div style="background: #f8f8f8; padding: 20px; border-radius: 8px;">
+                    <h4>Entregáveis Principais</h4>
+                    <ul style="font-size: 14px; line-height: 1.8;">
+                        <li>• Manual de Identidade Visual</li>
+                        <li>• Website institucional completo</li>
+                        <li>• Design responsivo</li>
+                        <li>• Formulário de orçamento/contato</li>
+                        <li>• Configuração inicial de SEO</li>
+                        <li>• Acesso administrativo completo</li>
+                    </ul>
+                </div>
+                
+                <div style="background: #f8f8f8; padding: 20px; border-radius: 8px;">
+                    <h4>Suporte e Treinamento</h4>
+                    <p style="font-size: 14px;">Agendamento de uma chamada de treinamento com compartilhamento de tela, que será gravada para consultas futuras.</p>
+                </div>
+                
+                <div style="background: #f8f8f8; padding: 20px; border-radius: 8px;">
+                    <h4>Benefícios Esperados</h4>
+                    <ul style="font-size: 14px; line-height: 1.8;">
+                        <li>• Identidade Visual Coesa</li>
+                        <li>• Experiência de Usuário Superior</li>
+                        <li>• Melhor Posicionamento Orgânico</li>
+                        <li>• Performance e Velocidade</li>
+                        <li>• Autonomia e Escalabilidade</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+                <span>cgrabbit.com.br</span>
+            </div>
+        </div>
+        
+        <!-- Página 8 -->
+        <div class="page">
+            <div class="page-number">08</div>
+            
+            <h2>Etapas do Projeto</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>FASE 1 - Estratégia e Estruturação</h4>
+                    <ul>
+                        <li>Alinhamento de requisitos e briefing detalhado</li>
+                        <li>Desenho da nova arquitetura de informação (mapa do site)</li>
+                        <li>Planejamento da estrutura de conteúdo e páginas</li>
+                        <li>Definição da identidade visual (cores, fontes e estilo)</li>
+                        <li>Seleção e configuração da base tecnológica (Tema e Plugins)</li>
+                    </ul>
+                    <div class="timeline-duration">Duração: (1-2 dias)</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>FASE 2 - Desenvolvimento Core (Backend e Frontend)</h4>
+                    <ul>
+                        <li>Configuração do ambiente WordPress</li>
+                        <li>Implementação do tema base escolhido</li>
+                        <li>Implementação das páginas principais e seções de conteúdo</li>
+                        <li>Configuração de funcionalidades (formulários, mapas, etc.)</li>
+                        <li>Implementação da base de SEO Técnico</li>
+                    </ul>
+                    <div class="timeline-duration">Duração: (4-7 dias)</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>FASE 3 - Testes, Refinamentos e SEO On-Page</h4>
+                    <ul>
+                        <li>Teste completo de todos os links, formulários e interatividade</li>
+                        <li>Correção de bugs e inconsistências visuais</li>
+                        <li>Auditoria e refinamento do SEO On-Page em todas as páginas</li>
+                        <li>Validação final com o cliente para rodada de ajustes</li>
+                    </ul>
+                    <div class="timeline-duration">Duração: (1-2 dias)</div>
+                </div>
+                
+                <div class="timeline-item">
+                    <h4>FASE 4 - Lançamento e Treinamento</h4>
+                    <ul>
+                        <li>Publicação (Go-live) do site no servidor final</li>
+                        <li>Otimizações finais de SEO e performance pós-lançamento</li>
+                        <li>Gravação e entrega dos vídeos-tutoriais de uso</li>
+                        <li>Início do suporte 60 dias</li>
+                    </ul>
+                    <div class="timeline-duration">Duração: (1-2 dias)</div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 9 -->
+        <div class="page">
+            <div class="page-number">09</div>
+            
+            <h2>Investimento</h2>
+            
+            <p style="font-size: 18px; margin-bottom: 30px;">O valor do investimento será calculado conforme as necessidades específicas do seu projeto.</p>
+            
+            <div class="pricing-table">
+                <h3>04. Produto/Serviço</h3>
+                
+                <div class="pricing-row">
+                    <span class="pricing-label">01 • Website em Wordpress com Tema Envato</span>
+                    <span class="pricing-value">R$1.000</span>
+                </div>
+                
+                <div class="pricing-row">
+                    <span class="pricing-label">01 • Rebranding + Manual de Identidade Visual Simpl.</span>
+                    <span class="pricing-value">R$450</span>
+                </div>
+                
+                <div class="pricing-row">
+                    <span class="pricing-label">Total:</span>
+                    <span class="pricing-value">R$1.450</span>
+                </div>
+                
+                <div style="margin-top: 30px; padding: 20px; background: white; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span>Parcelado 3x no Crédito:</span>
+                        <span style="font-weight: 600;">3x R$483,3 <small>+taxas</small></span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 15px;">
+                        <span>Condição bônus 10% OFF <span class="discount-badge">10% OFF</span></span>
+                        <span style="font-weight: 600;">Valor À Vista: R$1.305</span>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between;">
+                        <span></span>
+                        <span style="font-weight: 600;">Valor Parcela: 2x R$725</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <h4><span class="payment-icon" style="background: #0066ff;"></span> PIX</h4>
+                    <p>Chave: 48991391149</p>
+                    <p>Banco Inter</p>
+                    <p>Rodrigo Bianquini de Freitas</p>
+                </div>
+                
+                <div class="payment-method">
+                    <h4><span class="payment-icon"></span> Cartão</h4>
+                    <p>Parcelamento em até 12x</p>
+                    <p>*Repasse de taxas</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 8px;">
+                <p style="font-size: 14px; margin: 0;">
+                    <strong>Importante:</strong> O projeto só será iniciado mediante o pagamento de 50% do valor total. Oferecemos um desconto de 10% para pagamentos à vista no início do projeto.
+                </p>
+            </div>
+            
+            <div class="footer">
+                <span>©CGRabbit LTDA. Todos os direitos reservados</span>
+            </div>
+        </div>
+        
+        <!-- Página 10 -->
+        <div class="page">
+            <div class="page-number">10</div>
+            
+            <div class="logo">
+                <svg viewBox="0 0 40 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 5 C10 5, 5 15, 5 25 C5 35, 10 45, 20 45 C30 45, 35 35, 35 25 C35 15, 30 5, 20 5 Z" stroke="#1a1a1a" stroke-width="2" fill="none"/>
+                    <circle cx="15" cy="20" r="3" fill="#1a1a1a"/>
+                    <circle cx="25" cy="20" r="3" fill="#1a1a1a"/>
+                    <path d="M10 8 L10 2 M30 8 L30 2" stroke="#1a1a1a" stroke-width="2"/>
+                </svg>
+                <span class="logo-text">CGRABBIT</span>
+            </div>
+            
+            <h1 style="font-size: 64px;">Próximos Passos</h1>
+            
+            <p style="font-size: 18px; margin: 30px 0;">Estamos prontos para transformar sua ideia em realidade!</p>
+            
+            <p style="font-size: 16px; margin-bottom: 40px;">Se você gostou da nossa metodologia e acredita que podemos agregar valor ao seu negócio, aqui estão os próximos passos:</p>
+            
+            <div class="next-steps">
+                <div class="step-card">
+                    <span class="arrow"></span>
+                    <h4>Confirmação do interesse</h4>
+                    <p>Retorno por e-mail ou WhatsApp para avançarmos na negociação.</p>
+                </div>
+                
+                <div class="step-card">
+                    <span class="arrow"></span>
+                    <h4>Definição do escopo</h4>
+                    <p>Refinamento do projeto conforme suas necessidades.</p>
+                </div>
+                
+                <div class="step-card">
+                    <span class="arrow"></span>
+                    <h4>Início do projeto</h4>
+                    <p>Confirmado o Orçamento e realizado a Etapa de Garantia, damos início à produção conforme o cronograma acordado.</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 60px; padding: 20px; background: #f8f8f8; border-radius: 8px; text-align: center;">
+                <p style="font-size: 14px; color: #666;">
+                    A Validade desta proposta é de 07 dias a contar da data de envio. Após 07 dias, será necessário atualizar condições e valores caso haja correções monetárias aplicáveis.
+                </p>
+            </div>
+            
+            <div class="footer">
+                <span></span>
+                <span>cgrabbit.com.br</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

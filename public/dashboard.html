@@ -10,6 +10,8 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
+    <link rel="icon" type="image/x-icon" href="img/logo-angel (1) (1).ico" />
+
   <!-- Bootstrap Icons -->
   <link
     rel="stylesheet"
@@ -17,9 +19,9 @@
   />
   <style>
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
-</style>
+  </style>
   <style>
-      * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat' !important; }
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Montserrat' !important; }
 
     :root{
       --bg:#f3f1f0; --panel:#fff; --muted:#f0efef;
@@ -28,7 +30,7 @@
       --radius-xl:14px; --radius-lg:10px;
     }
 
-    body { background:var(--bg); color:var(--text); }
+    body { background:radial-gradient(circle at top left, #ffe4c4 0, #f3f1f0 45%, #ffffff 100%); color:var(--text); }
     .app-shell{ min-height:100vh; display:flex; flex-direction:column; }
 
     .topbar{
@@ -58,10 +60,9 @@
     .sidebar-sub{ margin-left:10px; display:none; flex-direction:column; gap:8px; }
     .sidebar-sub .sidebar-item{ padding:10px 12px; font-size:13px; }
     .sidebar-item .left{ display:flex; align-items:center; gap:10px; }
-    .debug-box
-    {
-        display: none !important;
-    }
+
+    .debug-box{ display:none !important; }
+
     .main-panel{
       background:var(--panel); border-radius:var(--radius-xl);
       padding:25px 18px; width:100%; box-shadow:0 1px 0 rgba(0,0,0,0.03);
@@ -70,6 +71,7 @@
     .panel-header{
       background:var(--muted); border-radius:10px; padding:14px 16px;
       display:flex; align-items:center; justify-content:space-between; font-size:15px; font-weight:600;
+      gap:10px; flex-wrap:wrap;
     }
     .panel-header .muted{ font-weight:500; color:var(--text); }
 
@@ -78,25 +80,59 @@
       padding:12px; position:relative;
     }
     .table-head{
-      display:grid; grid-template-columns:140px 190px 1fr 160px;
-      gap: 1rem;
+      display:grid; grid-template-columns:120px 140px 1fr 140px;
+      gap:1rem;
       font-size:13px; font-weight:700; padding:10px 12px;
     }
     .table-body{ max-height:340px; overflow-y:scroll; padding:6px 4px; }
+
     .row-item{
-      display:grid; grid-template-columns:140px 190px 1fr 160px; align-items:center;
-      padding:20px 12px; margin:6px 6px; border-radius:8px; background:#f0efef; font-size:14px;
-      gap: 1rem;
+      display:grid;
+      grid-template-columns:120px 140px 1fr 140px;
+      align-items:center;
+      padding:16px 12px;
+      margin:6px 6px;
+      border-radius:8px;
+      background:#f0efef;
+      font-size:14px;
+      gap:1rem;
     }
     .row-item:nth-child(even){ background:#fff; }
-    .row-item .value{ text-align:right; font-weight:700; }
+
+    .row-item .value{
+      text-align:right;
+      font-weight:700;
+    }
+
+    .row-label{
+      display:none;
+      font-weight:600;
+      margin-right:6px;
+      opacity:0.7;
+    }
+    .row-value{
+      display:inline-block;
+    }
+
+    .order-code{
+      font-family: "SF Mono", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;
+      padding:4px 8px;
+      border-radius:999px;
+      background:#fff;
+      border:1px solid #e5e7eb;
+      cursor:help;
+      max-width:100%;
+      white-space:nowrap;
+    }
 
     .panel-footer{
       display:flex; justify-content:flex-end; align-items:center; gap:12px; padding-top:10px;
+      flex-wrap:wrap;
     }
-    .month-select{
+    .week-select{
       background:var(--panel); border:1px solid #e5e7eb; border-radius:8px;
-      padding:10px 12px; font-size:14px; min-width:120px;
+      padding:10px 12px; font-size:14px; min-width:200px;
     }
 
     .btn-generate{
@@ -118,7 +154,6 @@
     }
     @keyframes shimmer{ 0%{background-position:200% 0} 100%{background-position:-200% 0} }
 
-    /* debug box */
     .debug-box{
       margin-top:8px; background:#0b1020; color:#e5e7eb; font-size:12px;
       padding:10px; border-radius:8px; white-space:pre-wrap; display:none;
@@ -129,35 +164,41 @@
       .content-wrap{ grid-template-columns:1fr; }
       .sidebar{ order:2; }
       .panel-header{ flex-direction:column; align-items:flex-start; gap:6px; }
-      .table-head,.row-item{ grid-template-columns:120px 160px 1fr 120px; }
+      .table-head,
+      .row-item{
+        grid-template-columns:1fr 1fr;
+      }
     }
 
-@media(max-width:768px)
-{
-    .table-card
-{
-    overflow: auto !important;
-}
+    @media(max-width:768px){
+      .table-card{ overflow:visible !important; }
+      .table-body{ overflow-y:scroll !important; }
 
-.table-body
-{
-    overflow-y: initial !important;
-}
-.row-item
-{
-    background:#fff !important;
-}
-.sidebar
-{
-    display: none !important;
-}
-.topbar .container
-{
-    flex-direction: column !important;
-    gap: 10px !important;
-}
-}
-    
+      .table-head{ display:none; }
+
+      .row-item{
+        grid-template-columns:1fr;
+        align-items:flex-start;
+        padding:12px 10px;
+        font-size:13px;
+        box-shadow:0 1px 3px rgba(0,0,0,0.05);
+      }
+      .row-item > div{
+        display:flex;
+        justify-content:space-between;
+        width:100%;
+      }
+      .row-label{ display:inline-block; }
+      .row-item .value{ text-align:right; }
+
+      .customer{ display:flex !important; }
+
+      .sidebar{ display:none !important; }
+      .topbar .container{
+        flex-direction:column !important;
+        gap:10px !important;
+      }
+    }
   </style>
 </head>
 
@@ -220,17 +261,17 @@
               Restaurant: <span id="restaurantName" class="muted">Loading...</span>
             </div>
             <div>
-              Total Value of <span id="monthLabel">--</span>:
-              <span id="monthTotal">$0.00</span>
+              Total Value of <span id="weekLabel">--</span>:
+              <span id="weekTotal">$0.00</span>
             </div>
           </div>
 
           <section class="table-card" id="tableCard">
             <div class="table-head">
-              <div>Order Code:</div>
-              <div>Day:</div>
-              <div>Customer:</div>
-              <div style="text-align:right;">Value to Pay:</div>
+              <div>Order ID</div>
+              <div>Day</div>
+              <div class="customer">Customer</div>
+              <div style="text-align:right;">Value to Pay</div>
             </div>
 
             <div id="tableBody" class="table-body"></div>
@@ -250,28 +291,35 @@
         </main>
 
         <div class="panel-footer">
-          <select id="monthSelect" class="month-select" onchange="changeMonth()"></select>
+          <select id="weekSelect" class="week-select" onchange="changeWeek()"></select>
 
-          <!-- BOTÃO CSV -->
           <button class="btn-generate" onclick="exportCSV()">
             Generate CSV
+          </button>
+
+          <button class="btn btn-outline-secondary" onclick="exportPDF()">
+            Generate PDF
           </button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- jsPDF UMD -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
     // -----------------------------
     // CONFIG
     // -----------------------------
     const REPORT_API_URL = "/api/report/month";
-    const DEBUG = true; // troca pra false quando terminar
+    const DEBUG = true; // coloca false depois que estiver tudo ok
 
     let CURRENT_RESTAURANT_MATCH_ID = null;
     let CURRENT_ROLE = null;
-
-    const ORDERS_CACHE = {};
+    let CURRENT_WEEK_START_DAY = 1; // 0=domingo, 1=segunda, etc. default segunda
+    let CURRENT_ROWS = [];
+    let CURRENT_WEEK_LABEL = "";
 
     // -----------------------------
     // DEBUG helpers
@@ -291,27 +339,23 @@
     // -----------------------------
     // HELPERS
     // -----------------------------
-    function toYYYYMM(dateObj){
+    function formatISODate(dateObj){
       const y = dateObj.getFullYear();
-      const m = String(dateObj.getMonth()+1).padStart(2, "0");
-      return `${y}-${m}`;
+      const m = String(dateObj.getMonth()+1).padStart(2,"0");
+      const d = String(dateObj.getDate()).padStart(2,"0");
+      return `${y}-${m}-${d}`;
     }
-    function toMMYYYY(yyyymm){
-      const [y, m] = yyyymm.split("-");
-      return `${m}/${y}`;
+
+    function formatDateBRShort(iso){
+      if(!iso) return "--";
+      const [y,m,d] = iso.split("-");
+      return `${d}/${m}`;
     }
-    function fromMMYYYY(mmyyyy){
-      const [m, y] = mmyyyy.split("/");
-      return `${y}-${m}`;
-    }
-    function monthLabelPT(mmyyyy){
-      const [m, y] = mmyyyy.split("/").map(Number);
-      const d = new Date(y, m-1, 1);
-      return d.toLocaleDateString("pt-BR", { month:"short" }).replace(".", "");
-    }
+
     function showPanelLoading(show){
       document.getElementById("panelLoading").style.display = show ? "flex" : "none";
     }
+
     function safeGet(obj, path, fallback=null){
       try{
         return path.split(".").reduce((o, k)=>o?.[k], obj) ?? fallback;
@@ -323,13 +367,9 @@
       const p = props?.[key];
       if(!p) return null;
 
-      // formula
       if(p.type === "formula") return p.formula?.number ?? null;
-
-      // number direto
       if(p.type === "number") return p.number ?? null;
 
-      // rollup array -> tenta extrair
       if(p.type === "rollup"){
         const arr = p.rollup?.array;
         if(Array.isArray(arr) && arr[0]){
@@ -339,7 +379,6 @@
           if(first.type === "unique_id") return first.unique_id?.number ?? null;
         }
       }
-
       return null;
     }
 
@@ -348,7 +387,6 @@
       if(typeof v === "number" && Number.isFinite(v)) return v;
 
       if(typeof v === "string"){
-        // troca vírgula por ponto e remove lixo
         const cleaned = v.replace(/\./g, "").replace(",", ".").replace(/[^\d.-]/g, "");
         const n = Number(cleaned);
         return Number.isFinite(n) ? n : 0;
@@ -357,65 +395,55 @@
       return 0;
     }
 
+    // -----------------------------
+    // NORMALIZAÇÃO DO NOTION
+    // -----------------------------
     function normalizeNotionOrder(order){
-  const props = order.properties || {};
+      const props = order.properties || {};
 
-  const code =
-    safeGet(props, 'Order Number: .title.0.plain_text') ||
-    safeGet(props, 'Order Number: .title.0.text.content') ||
-    order.id || "--";
+      const code =
+        safeGet(props, 'Order Number: .title.0.plain_text') ||
+        safeGet(props, 'Order Number: .title.0.text.content') ||
+        order.id || "--";
 
-  const customer =
-    safeGet(props, 'Customer Name.rollup.array.0.title.0.plain_text') ||
-    safeGet(props, 'Customer Name.rollup.array.0.title.0.text.content') ||
-    safeGet(props, '👥 Custumer Name: .rich_text.0.plain_text') ||
-    "--";
+      const customer =
+        safeGet(props, 'Customer Name.rollup.array.0.title.0.plain_text') ||
+        safeGet(props, 'Customer Name.rollup.array.0.title.0.text.content') ||
+        safeGet(props, '👥 Custumer Name: .rich_text.0.plain_text') ||
+        "--";
 
-  const createdISO =
-    safeGet(props, 'Order Placement DateTime.created_time') ||
-    safeGet(props, 'Created time.created_time') ||
-    order.created_time;
+      const createdISO =
+        safeGet(props, 'Order Placement DateTime.created_time') ||
+        safeGet(props, 'Created time.created_time') ||
+        order.created_time;
 
-  const day = createdISO
-    ? new Date(createdISO).toLocaleDateString("en-US", { month:"short", day:"numeric", year:"numeric" })
-    : "--";
+      const day = createdISO
+        ? new Date(createdISO).toLocaleDateString("en-US", {
+            month:"short", day:"numeric", year:"numeric"
+          })
+        : "--";
 
-  // ✅ SEMPRE usa Angel Fly Total (formula.number)
-  let valueRaw =
-    getNotionNumber(props, "Angel Fly Total ") ??  // com espaço final (igual no Notion)
-    getNotionNumber(props, "Angel Fly Total");    // fallback sem espaço
+      let valueRaw =
+        getNotionNumber(props, "Angel Fly Total ") ??
+        getNotionNumber(props, "Angel Fly Total");
 
-  const value = coerceNumber(valueRaw);
+      const value = coerceNumber(valueRaw);
+      const created_ts = createdISO ? new Date(createdISO).getTime() : 0;
 
-  return { code, day, customer, value, createdISO };
-}
+      return { code, day, customer, value, createdISO, created_ts };
+    }
 
     // -----------------------------
     // INIT
     // -----------------------------
-    document.addEventListener("DOMContentLoaded", async () => {
-      buildMonthSelect();
-      await loadUserContext();
-      await generateReport(true);
+    document.addEventListener("DOMContentLoaded", () => {
+      initDashboard();
     });
 
-    function buildMonthSelect(){
-      const select = document.getElementById("monthSelect");
-      select.innerHTML = "";
-
-      const now = new Date();
-      for(let i=0;i<12;i++){
-        const d = new Date(now.getFullYear(), now.getMonth()-i, 1);
-        const yyyymm = toYYYYMM(d);
-        const mmyyyy = toMMYYYY(yyyymm);
-
-        const opt = document.createElement("option");
-        opt.value = mmyyyy;
-        opt.textContent = mmyyyy;
-        if(i===0) opt.selected = true;
-        select.appendChild(opt);
-      }
-      logDebug("MonthSelect built. Current:", select.value);
+    async function initDashboard(){
+      await loadUserContext();
+      buildWeekSelect();
+      await generateReportForSelectedWeek(true);
     }
 
     async function loadUserContext(){
@@ -431,6 +459,11 @@
         CURRENT_ROLE = ctx?.user?.role || null;
         CURRENT_RESTAURANT_MATCH_ID = ctx?.restaurant?.restaurant_match_id || null;
 
+        const weekStartDayRaw = ctx?.restaurant?.week_start_day;
+        if (Number.isInteger(weekStartDayRaw) && weekStartDayRaw >= 0 && weekStartDayRaw <= 6) {
+          CURRENT_WEEK_START_DAY = weekStartDayRaw;
+        }
+
         const displayName =
           ctx?.restaurant?.restaurant_name ||
           ctx?.user?.name ||
@@ -442,6 +475,7 @@
 
         logDebug("Role:", CURRENT_ROLE);
         logDebug("restaurant_match_id:", CURRENT_RESTAURANT_MATCH_ID);
+        logDebug("week_start_day:", CURRENT_WEEK_START_DAY);
 
       }catch(e){
         console.error(e);
@@ -452,70 +486,133 @@
     }
 
     // -----------------------------
+    // WEEK SELECT
+    // -----------------------------
+    function buildWeekSelect(){
+      const select = document.getElementById("weekSelect");
+      select.innerHTML = "";
+
+      const today = new Date();
+      today.setHours(0,0,0,0);
+
+      const currentDow = today.getDay(); // 0=domingo..
+      let diff = currentDow - CURRENT_WEEK_START_DAY;
+      if (diff < 0) diff += 7;
+
+      // âncora = início da semana atual segundo configuração do restaurante
+      const anchor = new Date(today);
+      anchor.setDate(today.getDate() - diff);
+
+      const NUM_WEEKS = 12; // últimas 12 semanas
+
+      for (let i = 0; i < NUM_WEEKS; i++) {
+        const start = new Date(anchor);
+        start.setDate(anchor.getDate() - i * 7);
+
+        const end = new Date(start);
+        end.setDate(start.getDate() + 6);
+
+        const weekStartISO = formatISODate(start);
+        const weekEndISO = formatISODate(end);
+        const label = `${formatDateBRShort(weekStartISO)} to ${formatDateBRShort(weekEndISO)}`;
+
+        const opt = document.createElement("option");
+        opt.value = `${weekStartISO}|${weekEndISO}`;
+        if (i === 0) opt.selected = true;
+        opt.textContent = label;
+        select.appendChild(opt);
+      }
+
+      logDebug("WeekSelect built. First value:", select.value);
+    }
+
+    function changeWeek(){
+      generateReportForSelectedWeek(false);
+    }
+
+    // -----------------------------
+    // FORMAT ORDER CODE (6 chars + ...)
+    // -----------------------------
+    function formatOrderCode(code){
+      if (!code) return "--";
+      const s = String(code);
+      if (s.length <= 6) return s;
+      return s.slice(0, 6) + "...";
+    }
+
+    // -----------------------------
     // RENDER
     // -----------------------------
-    function renderTableRows(rows, mmyyyy){
+    function renderTableRows(rows, weekLabel){
       const body = document.getElementById("tableBody");
-      logDebug("Rendering rows:", rows.length, "for", mmyyyy);
 
       if(rows.length === 0){
         body.innerHTML = `
           <div class="p-3 text-muted" style="font-size:14px;">
-            No order found in this month.
+            No order found for this week.
           </div>
         `;
-      }else{
+      } else {
         body.innerHTML = rows.map(r => `
           <div class="row-item">
-            <div>${r.code}</div>
-            <div>${r.day}</div>
-            <div>${r.customer}</div>
-            <div class="value">$${r.value.toFixed(2)}</div>
+            <div>
+              <span class="row-label">Order:</span>
+              <span
+                class="row-value order-code"
+                title="${(r.code || "").toString().replace(/"/g, '&quot;')}"
+              >
+                ${formatOrderCode(r.code)}
+              </span>
+            </div>
+            <div>
+              <span class="row-label">Day:</span>
+              <span class="row-value">${r.day}</span>
+            </div>
+            <div class="customer">
+              <span class="row-label">Customer:</span>
+              <span class="row-value">${r.customer}</span>
+            </div>
+            <div class="value">
+              <span class="row-label">Value:</span>
+              <span class="row-value">$${r.value.toFixed(2)}</span>
+            </div>
           </div>
         `).join("");
       }
 
       const total = rows.reduce((acc, r)=>acc + r.value, 0);
-      document.getElementById("monthTotal").textContent = `$${total.toFixed(2)}`;
-      document.getElementById("monthLabel").textContent = monthLabelPT(mmyyyy);
-    }
-
-    async function changeMonth(){
-      const mmyyyy = document.getElementById("monthSelect").value;
-      logDebug("Change month ->", mmyyyy);
-
-      if(ORDERS_CACHE[mmyyyy]){
-        renderTableRows(ORDERS_CACHE[mmyyyy], mmyyyy);
-      }else{
-        await generateReport(true);
-      }
+      document.getElementById("weekTotal").textContent = `$${total.toFixed(2)}`;
+      document.getElementById("weekLabel").textContent = weekLabel || "--";
     }
 
     // -----------------------------
-    // FETCH RELATÓRIO (via server)
+    // FETCH RELATÓRIO (SEMANA)
     // -----------------------------
-    async function generateReport(isAuto=false){
-      const mmyyyy = document.getElementById("monthSelect").value;
-      const month = fromMMYYYY(mmyyyy);
-
-      logDebug("GenerateReport month:", month, "auto:", isAuto);
-
-      if(!CURRENT_RESTAURANT_MATCH_ID){
-        logDebug("❌ Sem restaurant_match_id");
-        if(!isAuto) alert("Match ID não encontrado pro usuário logado.");
+    async function generateReportForSelectedWeek(isAuto=false){
+      const select = document.getElementById("weekSelect");
+      if(!select || !select.value){
+        logDebug("Nenhuma semana selecionada ainda.");
         return;
       }
+
+      const [weekStart, weekEnd] = select.value.split("|");
+      const weekLabel = select.options[select.selectedIndex].textContent;
+      const month = weekStart.slice(0, 7); // "YYYY-MM"
+
+      logDebug("generateReportForSelectedWeek ->", { weekStart, weekEnd, month, isAuto });
 
       showPanelLoading(true);
 
       try{
-        logDebug("POST", REPORT_API_URL, { month });
-
         const res = await fetch(REPORT_API_URL, {
           method:"POST",
           headers:{ "Content-Type":"application/json" },
           credentials:"include",
-          body: JSON.stringify({ month })
+          body: JSON.stringify({
+            month,
+            week_start: weekStart,
+            week_end: weekEnd,
+          }),
         });
 
         logDebug("Report status:", res.status);
@@ -545,32 +642,39 @@
 
         const norm = pages.map(normalizeNotionOrder);
 
-// 🔥 ordena: mais recente -> mais antigo
-norm.sort((a, b) => (b.created_ts || 0) - (a.created_ts || 0));
+        // só por segurança, filtramos de novo pelo intervalo da semana
+        const startD = new Date(weekStart);
+        const endD = new Date(weekEnd);
+        endD.setDate(endD.getDate() + 1); // [start, end+1)
 
-// arredonda aqui também pra garantir
-const rounded = norm.map(o => ({
-  ...o,
-  value: Number(o.value.toFixed(2))
-}));
+        const filtered = norm.filter(r => {
+          if(!r.createdISO) return false;
+          const d = new Date(r.createdISO);
+          return d >= startD && d < endD;
+        });
 
-ORDERS_CACHE[mmyyyy] = rounded;
-renderTableRows(rounded, mmyyyy);
+        // ordena mais recente -> mais antigo
+        filtered.sort((a, b) => (b.created_ts || 0) - (a.created_ts || 0));
 
+        CURRENT_ROWS = filtered;
+        CURRENT_WEEK_LABEL = weekLabel;
+
+        renderTableRows(filtered, weekLabel);
 
       }catch(e){
         console.error(e);
-        logDebug("❌ Report error:", e.message || e);
-        ORDERS_CACHE[mmyyyy] = [];
-        renderTableRows([], mmyyyy);
-        if(!isAuto) alert("Erro ao carregar pedidos do mês.");
+        logDebug("❌ Weekly report error:", e.message || e);
+        CURRENT_ROWS = [];
+        CURRENT_WEEK_LABEL = "";
+        renderTableRows([], weekLabel);
+        if(!isAuto) alert("Erro ao carregar pedidos da semana.");
       }finally{
         showPanelLoading(false);
       }
     }
 
     // -----------------------------
-    // EXPORT CSV
+    // EXPORT CSV (IDs COMPLETOS)
     // -----------------------------
     function csvEscape(val){
       const s = String(val ?? "");
@@ -581,43 +685,160 @@ renderTableRows(rounded, mmyyyy);
     }
 
     function exportCSV(){
-      const mmyyyy = document.getElementById("monthSelect").value;
-      const rows = ORDERS_CACHE[mmyyyy] || [];
-
+      const rows = CURRENT_ROWS || [];
       if(!rows.length){
-        alert("Não tem pedidos nesse mês para exportar.");
+        alert("Não tem pedidos para exportar nessa semana.");
         return;
       }
 
-      // cabeçalho
       const header = ["Order Code", "Day", "Customer", "Value"];
 
       const lines = [
         header.join(","),
         ...rows.map(r => ([
-          csvEscape(r.code),
+          csvEscape(r.code),                 // ID completo
           csvEscape(r.day),
           csvEscape(r.customer),
-          // força 2 casas no CSV
-          csvEscape(Number(r.value).toFixed(2))
+          csvEscape(Number(r.value).toFixed(2)),
         ]).join(","))
       ];
 
-      // BOM pra Excel/Sheets abrir UTF-8 certinho
       const csvContent = "\uFEFF" + lines.join("\n");
-
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
 
+      const fileSafeLabel = (CURRENT_WEEK_LABEL || "week")
+        .replace(/\s+/g, "_")
+        .replace(/[^\w\-]/g, "");
+
       const a = document.createElement("a");
       a.href = url;
-      a.download = `angelFly_${mmyyyy.replace("/", "-")}.csv`;
+      a.download = `angelFly_${fileSafeLabel}.csv`;
       document.body.appendChild(a);
       a.click();
       a.remove();
 
       URL.revokeObjectURL(url);
       logDebug("CSV exported:", a.download, "rows:", rows.length);
+    }
+
+    // -----------------------------
+    // EXPORT PDF (IDs COMPLETOS, SEM SOBREPOR)
+    // -----------------------------
+    function exportPDF(){
+      const rows = CURRENT_ROWS || [];
+      if (!rows.length) {
+        alert("Não tem pedidos para exportar nessa semana.");
+        return;
+      }
+
+      if (!window.jspdf || !window.jspdf.jsPDF) {
+        alert("Biblioteca de PDF não carregou. Tente recarregar a página.");
+        return;
+      }
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+
+      const restaurantName = document.getElementById("restaurantName")?.textContent || "-";
+      const weekLabel = CURRENT_WEEK_LABEL || "-";
+      const total = rows.reduce((acc, r)=> acc + r.value, 0).toFixed(2);
+
+      // Config de layout
+      const fontSize = 10;
+      const lineHeight = 5; // distância entre linhas dentro da mesma linha lógica
+      doc.setFontSize(fontSize);
+
+      let y = 15;
+
+      // Título
+      doc.setFontSize(14);
+      doc.text("AngelFly - Weekly Report", 14, y);
+      y += 8;
+
+      doc.setFontSize(11);
+      doc.text(`Restaurant: ${restaurantName}`, 14, y);
+      y += 6;
+      doc.text(`Week: ${weekLabel}`, 14, y);
+      y += 10;
+
+      // Cabeçalho da tabela
+      doc.setFontSize(fontSize);
+      doc.text("Order", 14, y);
+      doc.text("Day", 60, y);
+      doc.text("Customer", 90, y);
+      doc.text("Value", 190, y, { align: "right" });
+
+      y += 4;
+      doc.line(14, y, 196, y);
+      y += 6;
+
+      const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+
+      rows.forEach((r) => {
+        const fullCode = r.code ? String(r.code) : "--";
+        const customerText = (r.customer || "--").toString();
+
+        // Quebra o Order ID e o Customer em múltiplas linhas
+        const codeLines = doc.splitTextToSize(fullCode, 40);   // ~40px de largura
+        const custLines = doc.splitTextToSize(customerText, 80); // ~80px de largura
+
+        const maxLines = Math.max(codeLines.length, custLines.length);
+        const rowHeight = maxLines * lineHeight + 2;
+
+        // Se não couber na página atual, pula pra próxima antes de desenhar
+        if (y + rowHeight > pageHeight - 20) {
+          doc.addPage();
+          y = 20;
+
+          // Cabeçalho em nova página
+          doc.setFontSize(fontSize);
+          doc.text("Order", 14, y);
+          doc.text("Day", 60, y);
+          doc.text("Customer", 90, y);
+          doc.text("Value", 190, y, { align: "right" });
+
+          y += 4;
+          doc.line(14, y, 196, y);
+          y += 6;
+        }
+
+        // Desenha as linhas
+        for (let i = 0; i < maxLines; i++) {
+          const lineY = y + i * lineHeight;
+
+          if (codeLines[i]) {
+            doc.text(codeLines[i], 14, lineY);
+          }
+
+          // Day e Value só na primeira linha
+          if (i === 0) {
+            doc.text(r.day || "--", 60, lineY);
+            doc.text(`$${r.value.toFixed(2)}`, 190, lineY, { align: "right" });
+          }
+
+          if (custLines[i]) {
+            doc.text(custLines[i], 90, lineY);
+          }
+        }
+
+        y += rowHeight;
+      });
+
+      // Total
+      if (y > pageHeight - 20) {
+        doc.addPage();
+        y = 20;
+      }
+      y += 4;
+      doc.setFontSize(11);
+      doc.text(`Total: $${total}`, 190, y, { align: "right" });
+
+      const fileSafeLabel = (CURRENT_WEEK_LABEL || "week")
+        .replace(/\s+/g, "_")
+        .replace(/[^\w\-]/g, "");
+
+      doc.save(`angelFly_${fileSafeLabel}.pdf`);
     }
 
     // -----------------------------
@@ -641,7 +862,7 @@ renderTableRows(rounded, mmyyyy);
 
     // -----------------------------
     // LOGOUT
-    // -----------------------------
+    // -----------------------------table-card
     async function handleLogout(){
       try{
         await fetch("/api/logout", { method:"POST", credentials:"include" });
