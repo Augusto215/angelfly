@@ -8,8 +8,8 @@ services:
       - .env
 
     # externa 5555 -> interna 3000
-    ports:
-      - "5555:3000"
+    #ports:
+    #  - "5555:3000"
 
     logging:
       driver: "json-file"
