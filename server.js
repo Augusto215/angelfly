@@ -872,7 +872,7 @@ app.get("/admin", requireAdmin, (req, res) => {
   return res.sendFile(path.join(PUBLIC_DIR, "admin.html"));
 });
 
-app.get("/admin/create-user", requireAdmin, (req, res) => {
+app.get("/create-user", requireAdmin, (req, res) => {
   return res.sendFile(path.join(PUBLIC_DIR, "create-user.html"));
 });
 
