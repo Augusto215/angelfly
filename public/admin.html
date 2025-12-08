@@ -3,14 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>AngelFly - Create User</title>
+  <title>AngelFly - Admin Panel</title>
 
-  <!-- Bootstrap 5 -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
-  <!-- Bootstrap Icons -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
@@ -20,6 +18,7 @@
   </style>
 
   <style>
+    /* * CSS DE ESTILIZAÇÃO GERAL (Mantido do código anterior) */
     * {
       margin:0;
       padding:0;
@@ -305,7 +304,7 @@
       background:#22c55e;
     }
 
-    /* FORM */
+    /* FORM / TABLE */
     .form-section{
       border-radius:16px;
       border:1px solid rgba(209,213,219,0.8);
@@ -389,7 +388,8 @@
       margin-top:0;
     }
 
-    .btn-generate{
+    .btn-generate,
+    .btn-primary{
       background:var(--primary);
       border:none;
       color:#fff;
@@ -402,7 +402,8 @@
       gap:6px;
     }
 
-    .btn-generate:hover{
+    .btn-generate:hover,
+    .btn-primary:hover{
       background:var(--primary-dark);
     }
 
@@ -418,6 +419,71 @@
       padding:9px 12px;
     }
 
+    .table{
+      font-size:13px;
+      margin-bottom:0;
+    }
+
+    .table thead th{
+      border-bottom-width:1px;
+      font-weight:600;
+      color:#4b5563;
+      padding:10px 12px;
+    }
+
+    .table tbody td{
+      vertical-align:middle;
+      padding:10px 12px;
+    }
+
+    .table-responsive{
+      border-radius:16px;
+      border:1px solid rgba(209,213,219,0.8);
+      overflow-x:auto;
+    }
+
+    .badge-role{
+        padding: 4px 8px;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .role-restaurant{ background: rgba(249,115,22,0.15); color: #ea580c; }
+    .role-driver{ background: rgba(34,197,94,0.15); color: #16a34a; }
+    .role-admin{ background: rgba(59,130,246,0.15); color: #2563eb; }
+    
+    .status-active{ color: #16a34a; }
+    .status-inactive{ color: #ef4444; }
+
+    .btn-action{
+        padding: 4px 8px;
+        font-size: 13px;
+        margin-right: 4px;
+        cursor: pointer;
+    }
+
+    .btn-action i{
+        font-size: 16px;
+    }
+
+    .modal-content{
+        border-radius: 18px;
+    }
+
+    .modal-header{
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .modal-footer{
+        border-top: none;
+        padding-top: 0;
+    }
+
+    /* RESPONSIVIDADE GERAL */
     @media (max-width:992px){
       .content-inner{
         grid-template-columns:1fr;
@@ -465,12 +531,76 @@
       .panel-header{
         padding:14px 12px 12px;
       }
+
+      /* RESPONSIVIDADE DA TABELA: Transforma em lista vertical */
+      .table-responsive {
+        /* Remove o overflow-x para permitir a visualização da lista */
+        overflow-x: visible;
+        border: none;
+        padding: 0;
+      }
+
+      .table {
+        /* Remove o estilo padrão de tabela */
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      .table thead {
+        /* Esconde o cabeçalho padrão */
+        display: none;
+      }
+
+      .table tbody tr {
+        /* Estilo de cada linha (agora um item de lista) */
+        display: block;
+        margin-bottom: 15px;
+        border: 1px solid rgba(209, 213, 219, 0.8);
+        border-radius: 12px;
+        background: #fff;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .table tbody td {
+        /* Estilo de cada célula */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 8px 12px;
+        border: none;
+        border-bottom: 1px solid #eee; /* Separador entre campos */
+        font-size: 13px;
+      }
+      
+      .table tbody td:last-child {
+        /* Estilo da célula de Ações */
+        display: flex;
+        justify-content: flex-end;
+        border-bottom: none;
+        padding-top: 12px;
+      }
+      
+      .table tbody td:before {
+        /* Adiciona o label do cabeçalho como pseudo-elemento */
+        content: attr(data-label);
+        font-weight: 600;
+        color: #6b7280;
+        text-transform: capitalize;
+        white-space: nowrap;
+        margin-right: 10px;
+        flex-shrink: 0;
+      }
+      
+      /* Ajuste da primeira célula (Nome) para remover o label, se necessário */
+      .table tbody tr td:first-child:before {
+          content: '';
+          display: none;
+      }
     }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <!-- TOPBAR -->
     <header class="topbar">
       <div class="topbar-inner">
         <div class="brand">
@@ -491,33 +621,30 @@
       </div>
     </header>
 
-    <!-- CONTENT -->
     <div class="content-wrap">
       <div class="content-inner">
-        <!-- SIDEBAR -->
         <aside class="sidebar">
           <div class="sidebar-card">
             <div class="sidebar-title">Admin</div>
 
-            <div class="sidebar-item" onclick="navigateDashboard()">
+            <div class="sidebar-item active" onclick="navigateDashboard()">
               <div class="left">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-              </div>
-              <i class="bi bi-chevron-right"></i>
-            </div>
-
-            <div class="sidebar-item active">
-              <div class="left">
-                <i class="bi bi-person-plus"></i>
-                <span>Create Users</span>
+                <i class="bi bi-person-lines-fill"></i>
+                <span>Manage Users</span>
               </div>
               <span style="font-size:10px; text-transform:uppercase; letter-spacing:0.08em;">Now</span>
+            </div>
+
+            <div class="sidebar-item" onclick="navigateCreateUser()">
+              <div class="left">
+                <i class="bi bi-person-plus"></i>
+                <span>Create User</span>
+              </div>
+              <i class="bi bi-chevron-right"></i>
             </div>
           </div>
         </aside>
 
-        <!-- MAIN PANEL -->
         <div class="main-panel-wrapper">
           <main class="main-panel">
             <div class="panel-header">
@@ -525,174 +652,167 @@
                 <div class="panel-title-badge">
                   <i class="bi bi-shield-lock"></i> Admin only
                 </div>
-                <div class="panel-title">Create new user</div>
+                <div class="panel-title">Manage users</div>
               </div>
               <div class="muted">
-                Fill in the fields below to create a new user in AngelFly. You can set the access level and, if needed, adjust the restaurant week configuration.
+                List and manage all users. You can edit their information or permanently delete their accounts.
               </div>
-              <div class="panel-meta-chip">
-                <span class="panel-meta-dot"></span>
-                <span>Real-time access control</span>
-              </div>
+              <a class="btn-generate" onclick="navigateCreateUser()">
+                <i class="bi bi-plus-lg"></i> New user
+              </a>
             </div>
 
-            <form id="userForm" class="mt-2">
-              <!-- SECTION: Basic info -->
-              <div class="form-section mb-3">
-                <div class="form-section-title">
-                  <span>Basic information</span>
-                  <span class="form-section-sub">Email, password and full name.</span>
-                </div>
-
-                <div class="row g-3">
-                  <!-- EMAIL -->
-                  <div class="col-md-6">
-                    <label for="email" class="form-label">Email *</label>
-                    <input type="email" class="form-control" id="email" required />
-                  </div>
-
-                  <!-- PASSWORD -->
-                  <div class="col-md-6">
-                    <label for="password" class="form-label">
-                      Password (optional)
-                    </label>
-                    <input
-                      type="password"
-                      class="form-control"
-                      id="password"
-                      placeholder="Leave blank to auto-generate"
-                    />
-                  </div>
-
-                  <!-- FULL NAME -->
-                  <div class="col-md-8">
-                    <label for="full_name" class="form-label">Full name *</label>
-                    <input type="text" class="form-control" id="full_name" required />
-                  </div>
-
-                  <!-- ROLE -->
-                  <div class="col-md-4">
-                    <label for="user_role" class="form-label">Role *</label>
-                    <div class="role-pill-group">
-                      <select id="user_role" class="form-select" required>
-                        <option value="">Select...</option>
-                        <option value="restaurant">Restaurant</option>
-                        <option value="driver">Driver</option>
-                        <option value="admin">Admin</option>
-                      </select>
-                    </div>
-                    <div class="form-text">
-                      Choose whether the user is a restaurant, driver or admin.
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <!-- SECTION: Match & week -->
-              <div class="form-section mb-3">
-                <div class="form-section-title">
-                  <span>Match & Restaurant week</span>
-                  <span class="form-section-sub">
-                    Link the user to Notion/system and, if it's a restaurant, set the week start/end.
-                  </span>
-                </div>
-
-                <div class="row g-3">
-                  <!-- MATCH ID -->
-                  <div class="col-md-6">
-                    <label for="match_id" class="form-label">
-                      Match ID (Notion / Restaurant / Driver)
-                    </label>
-                    <input type="text" class="form-control" id="match_id" />
-                    <div class="form-text">
-                      ID used to match with Notion or other systems (e.g. <code>230e8d38-9ad5-80...</code>).
-                    </div>
-                  </div>
-
-                  <!-- WEEK START / END (RESTAURANT ONLY) -->
-                  <div class="col-md-6" id="weekConfigWrapper" style="display:none;">
-                    <div class="row g-3">
-                      <div class="col-md-6">
-                        <label for="week_start_day" class="form-label">
-                          Week start (restaurant)
-                        </label>
-                        <select id="week_start_day" class="form-select">
-                          <option value="">Default</option>
-                          <option value="0">Sunday</option>
-                          <option value="1">Monday</option>
-                          <option value="2">Tuesday</option>
-                          <option value="3">Wednesday</option>
-                          <option value="4">Thursday</option>
-                          <option value="5">Friday</option>
-                          <option value="6">Saturday</option>
-                        </select>
-                      </div>
-
-                      <div class="col-md-6">
-                        <label for="week_end_day" class="form-label">
-                          Week end (restaurant)
-                        </label>
-                        <select id="week_end_day" class="form-select">
-                          <option value="">Default</option>
-                          <option value="0">Sunday</option>
-                          <option value="1">Monday</option>
-                          <option value="2">Tuesday</option>
-                          <option value="3">Wednesday</option>
-                          <option value="4">Thursday</option>
-                          <option value="5">Friday</option>
-                          <option value="6">Saturday</option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- IS ACTIVE -->
-                  <div class="col-md-4">
-                    <div class="checkbox-chip">
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                        id="is_active"
-                        checked
-                      />
-                      <label class="form-check-label" for="is_active">
-                        Active user
-                      </label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="d-flex justify-content-end gap-2 mt-3">
-                <button
-                  type="button"
-                  class="btn btn-outline-secondary"
-                  onclick="document.getElementById('userForm').reset(); toggleWeekFields();"
-                >
-                  Clear
-                </button>
-
-                <button type="submit" class="btn-generate" id="btnSubmit">
-                  <span id="btnSubmitText">Create user</span>
-                  <span
-                    id="btnSubmitSpinner"
-                    class="spinner-border spinner-border-sm"
-                    role="status"
-                    style="display:none;"
-                  ></span>
-                </button>
-              </div>
-            </form>
-
             <div id="feedback" class="alert mt-3" style="display:none;"></div>
+
+            <div class="table-responsive">
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Match ID</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <tr><td colspan="6" class="text-center text-muted">Loading users...</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div id="pagination" class="d-flex justify-content-end mt-3 gap-2">
+                </div>
+
           </main>
         </div>
       </div>
     </div>
   </div>
 
+  <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="editUserForm">
+          <input type="hidden" id="edit_id" name="id">
+          <div class="modal-body">
+            
+            <div class="mb-3">
+              <label for="edit_email" class="form-label">Email *</label>
+              <input type="email" class="form-control" id="edit_email" name="email" required>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_password" class="form-label">Password (New, optional)</label>
+              <input type="password" class="form-control" id="edit_password" name="password" placeholder="Leave blank to keep current password">
+            </div>
+
+            <div class="mb-3">
+              <label for="edit_full_name" class="form-label">Full name *</label>
+              <input type="text" class="form-control" id="edit_full_name" name="full_name" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit_user_role" class="form-label">Role *</label>
+              <select id="edit_user_role" class="form-select" name="user_role" required>
+                <option value="restaurant">Restaurant</option>
+                <option value="driver">Driver</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+            
+            <div class="mb-3">
+              <label for="edit_match_id" class="form-label">Match ID</label>
+              <input type="text" class="form-control" id="edit_match_id" name="match_id">
+              <div class="form-text">ID used to match with Notion or other systems.</div>
+            </div>
+
+            <div id="editWeekConfigWrapper">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="edit_week_start_day" class="form-label">Week start</label>
+                        <select id="edit_week_start_day" class="form-select" name="week_start_day">
+                            <option value="">Default</option>
+                            <option value="0">Sunday</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="edit_week_end_day" class="form-label">Week end</label>
+                        <select id="edit_week_end_day" class="form-select" name="week_end_day">
+                            <option value="">Default</option>
+                            <option value="0">Sunday</option>
+                            <option value="1">Monday</option>
+                            <option value="2">Tuesday</option>
+                            <option value="3">Wednesday</option>
+                            <option value="4">Thursday</option>
+                            <option value="5">Friday</option>
+                            <option value="6">Saturday</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="edit_is_active" name="is_active">
+              <label class="form-check-label" for="edit_is_active">User is active</label>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="btn-generate" id="btnEditSubmit">
+                <span id="btnEditSubmitText">Save Changes</span>
+                <span id="btnEditSubmitSpinner" class="spinner-border spinner-border-sm" role="status" style="display:none;"></span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteUserModalLabel">Confirm Deletion</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to permanently delete the user: <strong><span id="deleteUserName"></span></strong>?</p>
+          <p class="text-danger small">This action is irreversible and will remove the user's authentication and profile records.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" id="btnConfirmDelete">
+            <i class="bi bi-trash"></i> Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+  ></script>
   <script>
-    const CREATE_USER_API_URL = "/api/admin/users";
+    const USERS_API_URL = "/api/admin/users";
+    let currentPage = 1;
+    let totalPages = 1;
+    let currentDeleteUserId = null;
+    let editModalInstance;
 
     function safeGet(obj, path, fallback=null){
       try{
@@ -706,7 +826,29 @@
 
     async function initPage(){
       await loadUserContext();
-      setupForm();
+      // Inicializa o modal de edição
+      const editModalElement = document.getElementById('editUserModal');
+      editModalInstance = new bootstrap.Modal(editModalElement);
+      
+      // Carrega a lista inicial de usuários
+      await loadUsers(currentPage);
+
+      setupEditForm();
+      setupDeleteConfirmation();
+    }
+
+    // --- Utility Functions ---
+
+    /**
+     * Trunca uma string para um número máximo de caracteres e adiciona "..."
+     * @param {string} s A string a ser truncada.
+     * @param {number} max O número máximo de caracteres visíveis.
+     * @returns {string} A string truncada ou original.
+     */
+    function truncateText(s, max = 11){
+      if(s == null || s === "") return "N/A";
+      const str = String(s);
+      return str.length > max ? str.slice(0, max) + "..." : str;
     }
 
     async function loadUserContext(){
@@ -714,7 +856,6 @@
         const res = await fetch("/api/user/context", { credentials:"include" });
         if(!res.ok) throw new Error("context fetch failed");
         const ctx = await res.json();
-
         const displayName =
           safeGet(ctx, "restaurant.restaurant_name") ||
           safeGet(ctx, "user.name") ||
@@ -727,128 +868,22 @@
       }
     }
 
-    function setupForm(){
-      const form = document.getElementById("userForm");
-      form.addEventListener("submit", handleCreateUser);
-
-      const roleSelect = document.getElementById("user_role");
-      roleSelect.addEventListener("change", toggleWeekFields);
-    }
-
-    function toggleWeekFields(){
-      const role = document.getElementById("user_role").value;
-      const wrapper = document.getElementById("weekConfigWrapper");
-      const weekStart = document.getElementById("week_start_day");
-      const weekEnd = document.getElementById("week_end_day");
-
-      if (role === "restaurant") {
-        wrapper.style.display = "block";
-      } else {
-        wrapper.style.display = "none";
-        weekStart.value = "";
-        weekEnd.value = "";
-      }
-    }
-
-    function setLoading(isLoading){
-      const btn = document.getElementById("btnSubmit");
-      const text = document.getElementById("btnSubmitText");
-      const spinner = document.getElementById("btnSubmitSpinner");
-
-      if(isLoading){
-        btn.disabled = true;
-        text.textContent = "Creating...";
-        spinner.style.display = "inline-block";
-      } else {
-        btn.disabled = false;
-        text.textContent = "Create user";
-        spinner.style.display = "none";
-      }
-    }
-
     function showFeedback(type, message){
       const fb = document.getElementById("feedback");
       fb.style.display = message ? "block" : "none";
       fb.className = "alert mt-3 alert-" + (type === "error" ? "danger" : "success");
       fb.textContent = message || "";
+      if(message) setTimeout(() => fb.style.display = "none", 5000);
     }
 
-    async function handleCreateUser(event){
-      event.preventDefault();
-      setLoading(true);
-      showFeedback("success", ""); // clear
-
-      const email = document.getElementById("email").value.trim();
-      const password = document.getElementById("password").value;
-      const user_role = document.getElementById("user_role").value;
-      const full_name = document.getElementById("full_name").value.trim();
-      const match_id = document.getElementById("match_id").value.trim();
-      const week_start_day_raw = document.getElementById("week_start_day").value;
-      const week_end_day_raw = document.getElementById("week_end_day").value;
-      const is_active = document.getElementById("is_active").checked;
-
-      if(!email || !user_role || !full_name){
-        showFeedback("error", "Please fill at least Email, Role and Full name.");
-        setLoading(false);
-        return;
-      }
-
-      let week_start_day = null;
-      let week_end_day = null;
-      if (user_role === "restaurant") {
-        week_start_day = week_start_day_raw !== "" ? Number(week_start_day_raw) : null;
-        week_end_day = week_end_day_raw !== "" ? Number(week_end_day_raw) : null;
-      }
-
-      const payload = {
-        email,
-        user_role,
-        full_name,
-        match_id: match_id || null,
-        week_start_day,
-        week_end_day,
-        is_active
-      };
-
-      if (password && password.trim().length >= 6) {
-        payload.password = password.trim();
-      }
-
-      try{
-        const res = await fetch(CREATE_USER_API_URL, {
-          method:"POST",
-          headers:{ "Content-Type":"application/json" },
-          credentials:"include",
-          body: JSON.stringify(payload)
-        });
-
-        const text = await res.text();
-        let data;
-        try { data = JSON.parse(text); }
-        catch(e){ data = { message: text }; }
-
-        if(!res.ok){
-          const msg = data?.message || data?.error || "Failed to create user.";
-          showFeedback("error", msg);
-        } else {
-          const tempPass = data?.user?.password;
-          let successMsg = "User created successfully.";
-          if (tempPass) {
-            successMsg += ` Password: ${tempPass}`;
-          }
-          showFeedback("success", successMsg);
-          document.getElementById("password").value = "";
-        }
-
-      }catch(e){
-        showFeedback("error", "Communication error with the server.");
-      }finally{
-        setLoading(false);
-      }
-    }
+    // --- Navigation ---
 
     function navigateDashboard(){
-      window.location.href = "/admin";
+        window.location.href = "/admin"; // Já está na dashboard, apenas recarrega
+    }
+
+    function navigateCreateUser(){
+      window.location.href = "/admin/create-user";
     }
 
     async function handleLogout(){
@@ -858,6 +893,308 @@
       }catch(e){
         window.location.href = "/login-restaurant.html";
       }
+    }
+
+    // --- User Listing (Read) ---
+
+    function renderUserRow(user){
+      const isActive = user.is_active;
+      
+      // 1. Variáveis de Status
+      const statusClass = isActive ? 'status-active' : 'status-inactive';
+      const statusText = isActive ? 'Active' : 'Inactive';
+      
+      // 2. Variável de Match ID (Truncado)
+      const fullMatchId = user.match_id || 'N/A';
+      const matchIdDisplay = truncateText(fullMatchId, 11);
+      
+      // 3. Variável de Email (Truncado)
+      const fullEmail = user.email || 'N/A';
+      const emailDisplay = truncateText(fullEmail, 11);
+      
+      // 4. Labels para responsividade
+      const nameLabel = 'Name';
+      const emailLabel = 'Email';
+      const roleLabel = 'Role';
+      const matchIdLabel = 'Match ID';
+      const statusLabel = 'Status';
+      const actionsLabel = 'Actions';
+
+
+      return `
+        <tr>
+          <td data-label="${nameLabel}">${user.full_name || emailDisplay}</td>
+          <td data-label="${emailLabel}" title="${fullEmail}">${emailDisplay}</td>  
+          <td data-label="${roleLabel}">
+            <span class="badge-role role-${user.user_role}">${user.user_role}</span>
+          </td>
+          <td data-label="${matchIdLabel}" title="${fullMatchId}">${matchIdDisplay}</td>
+          <td data-label="${statusLabel}">
+            <span class="fw-bold ${statusClass}">${statusText}</span>
+          </td>
+          <td data-label="${actionsLabel}">
+            <button class="btn btn-sm btn-outline-primary btn-action" onclick="openEditModal('${user.id}')">
+                <i class="bi bi-pencil-square"></i>
+            </button>
+            <button class="btn btn-sm btn-outline-danger btn-action" onclick="openDeleteModal('${user.id}', '${user.full_name || user.email}')">
+                <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `;
+    }
+
+    function renderPagination(total, limit, page){
+        const totalPages = Math.ceil(total / limit);
+        const paginationHtml = [];
+
+        if(totalPages <= 1) {
+            document.getElementById("pagination").innerHTML = '';
+            return;
+        }
+
+        const prevDisabled = page === 1 ? 'disabled' : '';
+        const nextDisabled = page === totalPages ? 'disabled' : '';
+
+        paginationHtml.push(`
+            <button class="btn btn-sm btn-outline-secondary" ${prevDisabled} onclick="loadUsers(${page - 1})">
+                <i class="bi bi-arrow-left"></i> Previous
+            </button>
+        `);
+        
+        // Exibir página atual e total
+        paginationHtml.push(`
+            <span class="btn btn-sm btn-outline-secondary disabled">Page ${page} of ${totalPages}</span>
+        `);
+
+        paginationHtml.push(`
+            <button class="btn btn-sm btn-outline-secondary" ${nextDisabled} onclick="loadUsers(${page + 1})">
+                Next <i class="bi bi-arrow-right"></i>
+            </button>
+        `);
+
+        document.getElementById("pagination").innerHTML = paginationHtml.join('');
+    }
+
+    async function loadUsers(page = 1, limit = 50){
+      const tableBody = document.getElementById("userTableBody");
+      tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted"><div class="spinner-border spinner-border-sm me-2"></div> Loading users...</td></tr>';
+      showFeedback("success", "");
+      
+      try{
+        const res = await fetch(`${USERS_API_URL}?page=${page}&limit=${limit}`, { credentials:"include" });
+        if(!res.ok) throw new Error("Failed to load users");
+        
+        const data = await res.json();
+        
+        currentPage = data.page;
+        totalPages = Math.ceil(data.total / data.limit);
+
+        if(data.items && data.items.length > 0){
+          const html = data.items.map(renderUserRow).join('');
+          tableBody.innerHTML = html;
+        } else {
+          tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-muted">No users found.</td></tr>';
+        }
+
+        renderPagination(data.total, data.limit, data.page);
+
+      }catch(e){
+        tableBody.innerHTML = '<tr><td colspan="6" class="text-center text-danger">Error loading users.</td></tr>';
+        showFeedback("error", "Error loading users: " + (e.message || "Communication error"));
+        document.getElementById("pagination").innerHTML = '';
+      }
+    }
+
+
+    // --- User Editing (Update) ---
+
+    // Função auxiliar para controlar o display da configuração da semana no modal
+    function toggleEditWeekFields(role){
+        const wrapper = document.getElementById("editWeekConfigWrapper");
+        wrapper.style.display = role === "restaurant" ? "block" : "none";
+    }
+
+    async function openEditModal(userId){
+        showFeedback("success", ""); // Limpa feedback
+        try {
+            // **Usa a rota direta de GET por ID**
+            const res = await fetch(`${USERS_API_URL}/${userId}`, { credentials: "include" });
+            
+            if (!res.ok) {
+                const errorData = await res.json();
+                throw new Error(errorData?.error || "Failed to load user data.");
+            }
+            
+            const user = await res.json(); 
+
+            if (!user || !user.id) {
+                showFeedback("error", "User data received is empty or invalid.");
+                return;
+            }
+
+            // 1. Popula os campos do modal
+            document.getElementById("edit_id").value = user.id;
+            document.getElementById("edit_email").value = user.email || '[Email not found]'; 
+            document.getElementById("edit_full_name").value = user.full_name || '';
+            document.getElementById("edit_user_role").value = user.user_role || 'restaurant';
+            document.getElementById("edit_match_id").value = user.match_id || '';
+            document.getElementById("edit_password").value = ''; // Sempre limpa o campo de senha
+            document.getElementById("edit_is_active").checked = user.is_active;
+            
+            // Popula os campos da semana, tratando null
+            document.getElementById("edit_week_start_day").value = user.week_start_day !== null ? String(user.week_start_day) : '';
+            document.getElementById("edit_week_end_day").value = user.week_end_day !== null ? String(user.week_end_day) : '';
+
+            // 2. Controla a visibilidade da configuração da semana
+            toggleEditWeekFields(user.user_role);
+
+            // 3. Adiciona listener de mudança de role
+            document.getElementById("edit_user_role").onchange = (e) => toggleEditWeekFields(e.target.value);
+
+            // 4. Abre o modal
+            editModalInstance.show();
+
+        } catch (e) {
+            // Isso irá exibir a mensagem de erro da API ou a de comunicação
+            showFeedback("error", "Error loading user data: " + (e.message || "Communication error"));
+            document.querySelector(".panel-header").insertAdjacentHTML('afterend', 
+              `<div class="alert alert-danger mt-3">DEBUG ERROR: ${e.message}</div>`);
+        }
+    }
+
+    function setEditLoading(isLoading){
+      const btn = document.getElementById("btnEditSubmit");
+      const text = document.getElementById("btnEditSubmitText");
+      const spinner = document.getElementById("btnEditSubmitSpinner");
+
+      if(isLoading){
+        btn.disabled = true;
+        text.textContent = "Saving...";
+        spinner.style.display = "inline-block";
+      } else {
+        btn.disabled = false;
+        text.textContent = "Save Changes";
+        spinner.style.display = "none";
+      }
+    }
+
+    function setupEditForm(){
+        const form = document.getElementById("editUserForm");
+        form.addEventListener("submit", handleEditUser);
+    }
+
+    async function handleEditUser(event){
+        event.preventDefault();
+        setEditLoading(true);
+
+        const userId = document.getElementById("edit_id").value;
+        const email = document.getElementById("edit_email").value.trim();
+        const password = document.getElementById("edit_password").value.trim();
+        const user_role = document.getElementById("edit_user_role").value;
+        const full_name = document.getElementById("edit_full_name").value.trim();
+        const match_id = document.getElementById("edit_match_id").value.trim();
+        const is_active = document.getElementById("edit_is_active").checked;
+        const week_start_day_raw = document.getElementById("edit_week_start_day").value;
+        const week_end_day_raw = document.getElementById("edit_week_end_day").value;
+
+        // Sanitização dos campos de semana
+        let week_start_day = null;
+        let week_end_day = null;
+        if (user_role === "restaurant") {
+            // Se o valor for vazio, envia null. Caso contrário, Number(valor)
+            week_start_day = week_start_day_raw !== "" ? Number(week_start_day_raw) : null;
+            week_end_day = week_end_day_raw !== "" ? Number(week_end_day_raw) : null;
+        } else {
+             // Se não é restaurante, forçamos o envio de null (para limpar se houver)
+             week_start_day = null;
+             week_end_day = null;
+        }
+
+
+        const payload = {
+            email,
+            user_role,
+            full_name,
+            match_id: match_id || null,
+            is_active,
+            week_start_day,
+            week_end_day
+        };
+
+        if (password.length >= 6) {
+            payload.password = password;
+        }
+
+        try{
+            const res = await fetch(`${USERS_API_URL}/${userId}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+                body: JSON.stringify(payload)
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                throw new Error(data?.error || "Failed to update user.");
+            }
+            
+            editModalInstance.hide();
+            showFeedback("success", "User successfully updated!");
+            await loadUsers(currentPage); // Recarrega a lista para mostrar as mudanças
+
+        }catch(e){
+            showFeedback("error", "Update failed: " + (e.message || "Unknown error"));
+        }finally{
+            setEditLoading(false);
+        }
+    }
+
+    // --- User Deletion (Delete) ---
+
+    function openDeleteModal(userId, userName){
+        currentDeleteUserId = userId;
+        document.getElementById("deleteUserName").textContent = userName;
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteUserModal'));
+        deleteModal.show();
+    }
+
+    function setupDeleteConfirmation(){
+        document.getElementById("btnConfirmDelete").addEventListener("click", handleDeleteUser);
+    }
+
+    async function handleDeleteUser(){
+        const userId = currentDeleteUserId;
+        if (!userId) return;
+
+        // Fecha o modal de confirmação primeiro
+        const deleteModalElement = document.getElementById('deleteUserModal');
+        const deleteModalInstance = bootstrap.Modal.getInstance(deleteModalElement);
+        if(deleteModalInstance) deleteModalInstance.hide();
+
+        showFeedback("success", ""); // Limpa feedback anterior
+        
+        try{
+            const res = await fetch(`${USERS_API_URL}/${userId}`, {
+                method: "DELETE",
+                credentials: "include"
+            });
+
+            const data = await res.json();
+
+            if(!res.ok){
+                throw new Error(data?.error || "Failed to delete user.");
+            }
+            
+            showFeedback("success", `User ID ${userId} successfully deleted.`);
+            await loadUsers(currentPage); // Recarrega a lista
+
+        }catch(e){
+            showFeedback("error", "Deletion failed: " + (e.message || "Unknown error"));
+        }finally{
+            currentDeleteUserId = null;
+        }
     }
   </script>
 </body>

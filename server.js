@@ -222,6 +222,50 @@ app.get("/api/user", requireAuth, (req, res) => {
   res.json({ user: req.session.user });
 });
 
+// GET user by ID
+app.get("/api/admin/users/:id", requireAdmin, async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const { data, error } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("id", userId)
+      .single();
+
+    if (error) {
+      console.error("❌ /api/admin/users/:id (GET) error:", error);
+      // Pode ser 404 se não for encontrado
+      if (error.code === 'PGRST116') { 
+         return res.status(404).json({ error: "User profile not found" });
+      }
+      return res.status(400).json({ error: error.message });
+    }
+
+    // Nota: O Supabase não retorna o campo 'email' na tabela user_profiles.
+    // Para o frontend, precisamos do email. Vamos buscar no Auth.
+    const { data: authData, error: authError } =
+        await supabase.auth.admin.getUserById(userId);
+    
+    // Se o profile existe mas o auth falhou/não existe, ainda retornamos o profile, mas com um aviso.
+    if (authError || !authData?.user) {
+        console.warn(`⚠️ Auth user not found for profile ID: ${userId}`);
+    }
+
+    const userWithEmail = {
+        ...data,
+        email: authData?.user?.email || '[Auth Email Missing]',
+        // Adicionando um campo de verificação de atividade (se você tiver no auth)
+        is_active: data.is_active, 
+    };
+
+    return res.json(userWithEmail);
+  } catch (e) {
+    console.error("🔥 /api/admin/users/:id (GET) error:", e && e.stack ? e.stack : e);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 app.get("/api/user/context", requireAuth, async (req, res) => {
   try {
     const userId = req.session.user.id;
@@ -537,7 +581,7 @@ app.post("/api/admin/users", requireAdmin, async (req, res) => {
   }
 });
 
-// LIST users
+// LIST users - AGORA COM EMAIL DO SUPABASE AUTH
 app.get("/api/admin/users", requireAdmin, async (req, res) => {
   try {
     const page = Number(req.query.page || 1);
@@ -555,15 +599,55 @@ app.get("/api/admin/users", requireAdmin, async (req, res) => {
       query = query.eq("user_role", roleFilter);
     }
 
-    const { data, error, count } = await query;
+    const { data: profiles, error, count } = await query;
 
     if (error) {
       console.error("❌ /api/admin/users (GET) error:", error);
       return res.status(400).json({ error: error.message });
     }
 
+    if (!profiles || profiles.length === 0) {
+      return res.json({
+        items: [],
+        page,
+        limit,
+        total: count || 0,
+      });
+    }
+
+    // --- CORREÇÃO: Busca os emails de cada usuário no Auth ---
+    // Cria um mapa para armazenar o email de cada profile ID
+    const userEmailsMap = {};
+    const profilesToFetch = profiles.map(p => p.id);
+    
+    // NOTA: O método listUsers() do Supabase Admin SDK não é ideal para paginação, 
+    // mas vamos tentar buscar todos os IDs da lista atual para preencher os emails.
+
+    // Isso pode ser muito lento ou falhar se você tiver milhares de usuários
+    // e o Supabase Auth limitar a consulta. Para esta solução simples, vamos iterar.
+
+    const usersWithEmailPromises = profiles.map(async (profile) => {
+        try {
+            const { data: authData } = await supabase.auth.admin.getUserById(profile.id);
+            return {
+                ...profile,
+                email: authData?.user?.email || '[Auth Email Missing]',
+                // Anexa o email ao objeto do perfil
+            };
+        } catch (e) {
+            console.error(`Falha ao buscar Auth para user ID ${profile.id}:`, e);
+            return {
+                ...profile,
+                email: '[Auth Error]',
+            };
+        }
+    });
+
+    const itemsWithEmail = await Promise.all(usersWithEmailPromises);
+    // ---------------------------------------------------------
+
     return res.json({
-      items: data || [],
+      items: itemsWithEmail || [],
       page,
       limit,
       total: count || 0,
