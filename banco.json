@@ -1,0 +1,649 @@
+[
+  {
+    "object": "database",
+    "id": "230e8d38-9ad5-806a-a9ef-e8a4d9ad4240",
+    "cover": null,
+    "icon": {
+      "type": "external",
+      "external": {
+        "url": "https://www.notion.so/icons/database_gray.svg"
+      }
+    },
+    "created_time": "2025-07-14T01:15:00.000Z",
+    "created_by": {
+      "object": "user",
+      "id": "914adf7f-2693-4a64-bce9-f7d8ed47940c"
+    },
+    "last_edited_by": {
+      "object": "user",
+      "id": "240d872b-594c-8180-93e1-0002c06940be"
+    },
+    "last_edited_time": "2025-12-02T13:21:00.000Z",
+    "title": [
+      {
+        "type": "text",
+        "text": {
+          "content": "Cadastro Drivers Angel Fly ",
+          "link": null
+        },
+        "annotations": {
+          "bold": false,
+          "italic": false,
+          "strikethrough": false,
+          "underline": false,
+          "code": false,
+          "color": "default"
+        },
+        "plain_text": "Cadastro Drivers Angel Fly ",
+        "href": null
+      }
+    ],
+    "description": [],
+    "is_inline": false,
+    "properties": {
+      "Data de Nascimento": {
+        "id": "%40Jgj",
+        "name": "Data de Nascimento",
+        "description": null,
+        "type": "date",
+        "date": {}
+      },
+      "License Number": {
+        "id": "A%3COV",
+        "name": "License Number",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Fabricante Carro": {
+        "id": "AHa%3A",
+        "name": "Fabricante Carro",
+        "description": null,
+        "type": "select",
+        "select": {
+          "options": [
+            {
+              "id": "79045672-da82-4c16-ab9b-122dd2bddc9d",
+              "name": "Toyota",
+              "color": "orange",
+              "description": null
+            }
+          ]
+        }
+      },
+      "Endereço Driver ": {
+        "id": "DQ~%5C",
+        "name": "Endereço Driver ",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "SSN/ITIN": {
+        "id": "DziI",
+        "name": "SSN/ITIN",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Remuneraçāo": {
+        "id": "ETq%3A",
+        "name": "Remuneraçāo",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Experiência ": {
+        "id": "FQDG",
+        "name": "Experiência ",
+        "description": null,
+        "type": "select",
+        "select": {
+          "options": [
+            {
+              "id": "b7f4a5f8-eac1-4c64-834f-63ffaefb3926",
+              "name": "Iniciante",
+              "color": "purple",
+              "description": null
+            },
+            {
+              "id": "f20c717a-1a6e-4352-99d6-ccc602953267",
+              "name": "Aprendiz",
+              "color": "green",
+              "description": null
+            },
+            {
+              "id": "e168f3d1-bdc0-44ae-bab0-8dbea4f9cb5e",
+              "name": "Intermediario",
+              "color": "orange",
+              "description": null
+            },
+            {
+              "id": "77266b89-403c-4dbe-94f4-d5192401534b",
+              "name": "Experiente",
+              "color": "red",
+              "description": null
+            },
+            {
+              "id": "3d7a0ccf-1d2a-45d3-9cdb-431215af2746",
+              "name": "Super Experiente",
+              "color": "default",
+              "description": null
+            }
+          ]
+        }
+      },
+      "Cargo": {
+        "id": "GFhu",
+        "name": "Cargo",
+        "description": null,
+        "type": "multi_select",
+        "multi_select": {
+          "options": [
+            {
+              "id": "49d215bf-1a3e-4596-b1c8-50f221f23f9c",
+              "name": "Founder",
+              "color": "pink",
+              "description": null
+            },
+            {
+              "id": "9a4738c3-8f3b-4b43-9276-287cd76f8970",
+              "name": "Driver",
+              "color": "default",
+              "description": null
+            },
+            {
+              "id": "81ee4d79-f6cb-4c78-87f2-f7831551db62",
+              "name": "Notion",
+              "color": "blue",
+              "description": null
+            },
+            {
+              "id": "76090663-c79d-49c6-ade7-c6243660a6b4",
+              "name": "Financeiro",
+              "color": "purple",
+              "description": null
+            },
+            {
+              "id": "7b6adf6a-584b-4c4e-b4aa-c6e616a2548d",
+              "name": "Monitoramento",
+              "color": "orange",
+              "description": null
+            },
+            {
+              "id": "35b8ffbe-ed5f-4071-8af9-9959dbfec7bb",
+              "name": "Gestão de pessoas",
+              "color": "pink",
+              "description": null
+            },
+            {
+              "id": "5888a07d-4776-42f7-8f29-e73448f0d20a",
+              "name": "Gestão de qualidade",
+              "color": "brown",
+              "description": null
+            }
+          ]
+        }
+      },
+      "Entrada": {
+        "id": "NBr%3A",
+        "name": "Entrada",
+        "description": null,
+        "type": "date",
+        "date": {}
+      },
+      "Carrinho": {
+        "id": "NlEJ",
+        "name": "Carrinho",
+        "description": null,
+        "type": "select",
+        "select": {
+          "options": [
+            {
+              "id": "80a44b5e-816b-4c03-88db-1ed28275ebf0",
+              "name": "1 carrinho disponível",
+              "color": "blue",
+              "description": null
+            },
+            {
+              "id": "4d4aa1d8-6b52-41e2-b1e4-ba831c29c195",
+              "name": "Nenhum",
+              "color": "brown",
+              "description": null
+            },
+            {
+              "id": "67b1a757-4bfd-4266-b6c4-637b88ff6735",
+              "name": "2 carrinhos disponíveis",
+              "color": "yellow",
+              "description": null
+            }
+          ]
+        }
+      },
+      "email": {
+        "id": "Qt~j",
+        "name": "email",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Aniversário": {
+        "id": "RmhM",
+        "name": "Aniversário",
+        "description": null,
+        "type": "formula",
+        "formula": {
+          "expression": "if(or(dateBetween(now(), dateAdd({{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, dateBetween(now(), {{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"years\"), \"years\"), \"days\") == 1, dateBetween(now(), dateAdd({{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, dateBetween(now(), {{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"years\"), \"years\"), \"days\") > 1), dateAdd({{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, dateBetween(now(), {{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"years\") + 1, \"years\"), dateAdd({{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, dateBetween(now(), {{notion:block_property:%40Jgj:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"years\"), \"years\"))"
+        }
+      },
+      "Pedidos qt": {
+        "id": "VtVX",
+        "name": "Pedidos qt",
+        "description": null,
+        "type": "formula",
+        "formula": {
+          "expression": "{{notion:block_property:W%5BYd:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}"
+        }
+      },
+      "Qtd de pedidos": {
+        "id": "W%5BYd",
+        "name": "Qtd de pedidos",
+        "description": null,
+        "type": "rollup",
+        "rollup": {
+          "rollup_property_name": "Order Number: ",
+          "relation_property_name": "Pedidos",
+          "rollup_property_id": "title",
+          "relation_property_id": "a=y>",
+          "function": "count"
+        }
+      },
+      "Cor carro": {
+        "id": "ZUzB",
+        "name": "Cor carro",
+        "description": null,
+        "type": "select",
+        "select": {
+          "options": [
+            {
+              "id": "96349ce9-c152-412a-a95b-c6e0bd246eac",
+              "name": "Black",
+              "color": "yellow",
+              "description": null
+            },
+            {
+              "id": "ed35aeb3-2b0b-4d79-b48c-44f99c54d316",
+              "name": "Blue",
+              "color": "orange",
+              "description": null
+            }
+          ]
+        }
+      },
+      "ITIN/Social": {
+        "id": "%5CN%3EU",
+        "name": "ITIN/Social",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Nível de Experiência": {
+        "id": "%5CxLA",
+        "name": "Nível de Experiência",
+        "description": null,
+        "type": "formula",
+        "formula": {
+          "expression": "if({{notion:block_property:FQDG:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == \"Iniciante\", 1.2,\nif({{notion:block_property:FQDG:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == \"Aprendiz\", 1.1,\nif({{notion:block_property:FQDG:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == \"Intermediario\", 1,\nif({{notion:block_property:FQDG:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == \"Experiente\", 0.85,\nif({{notion:block_property:FQDG:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == \"Super Experiente\", 0.75, 0)))))\n"
+        }
+      },
+      "Pedidos": {
+        "id": "a%3Dy%3E",
+        "name": "Pedidos",
+        "description": null,
+        "type": "relation",
+        "relation": {
+          "database_id": "230e8d38-9ad5-80ca-9498-c4fe60b52663",
+          "synced_property_name": " DRIVERS:",
+          "synced_property_id": "deza"
+        }
+      },
+      "Idioma": {
+        "id": "bi%5Ct",
+        "name": "Idioma",
+        "description": null,
+        "type": "multi_select",
+        "multi_select": {
+          "options": [
+            {
+              "id": "b3f10df1-bc76-46e2-9498-90e9aed8b054",
+              "name": "Portugues-BR",
+              "color": "brown",
+              "description": null
+            },
+            {
+              "id": "6c17c4dd-d812-4ebe-8406-340e7fc7ae9b",
+              "name": "English",
+              "color": "purple",
+              "description": null
+            },
+            {
+              "id": "ec19132b-bc59-4168-991a-84a76036e298",
+              "name": "Notion",
+              "color": "red",
+              "description": null
+            }
+          ]
+        }
+      },
+      "senha-driver-portal": {
+        "id": "c%7BnX",
+        "name": "senha-driver-portal",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Status": {
+        "id": "dHSt",
+        "name": "Status",
+        "description": null,
+        "type": "status",
+        "status": {
+          "options": [
+            {
+              "id": "87bc1430-80b1-4bdb-aecf-508e81d08df6",
+              "name": "Em treinamento",
+              "color": "default",
+              "description": null
+            },
+            {
+              "id": "2dad8557-2343-4271-b16c-84945c36fd35",
+              "name": "Afastado",
+              "color": "blue",
+              "description": null
+            },
+            {
+              "id": "e271ccb3-5103-421a-a3ff-83aab5edc71e",
+              "name": "Ativo",
+              "color": "green",
+              "description": null
+            }
+          ],
+          "groups": [
+            {
+              "id": "c5f5b9a4-2758-446a-aa2b-0e1f694b8be8",
+              "name": "To-do",
+              "color": "gray",
+              "option_ids": [
+                "87bc1430-80b1-4bdb-aecf-508e81d08df6"
+              ]
+            },
+            {
+              "id": "0334d2be-117a-4ba0-bca9-cd9ea025efc8",
+              "name": "In progress",
+              "color": "blue",
+              "option_ids": [
+                "2dad8557-2343-4271-b16c-84945c36fd35"
+              ]
+            },
+            {
+              "id": "9d6ce662-fabd-4a95-8628-42094f288b71",
+              "name": "Complete",
+              "color": "green",
+              "option_ids": [
+                "e271ccb3-5103-421a-a3ff-83aab5edc71e"
+              ]
+            }
+          ]
+        }
+      },
+      "Address": {
+        "id": "gM%7B%3F",
+        "name": "Address",
+        "description": null,
+        "type": "rich_text",
+        "rich_text": {}
+      },
+      "Tipo Carro": {
+        "id": "jadB",
+        "name": "Tipo Carro",
+        "description": null,
+        "type": "multi_select",
+        "multi_select": {
+          "options": [
+            {
+              "id": "96f4d6d6-18b5-440b-a2f9-6cb6fd13d8e2",
+              "name": "SUV",
+              "color": "orange",
+              "description": null
+            },
+            {
+              "id": "675b03ac-02f0-4fad-a458-7d949d17d6a7",
+              "name": "Sedan",
+              "color": "pink",
+              "description": null
+            },
+            {
+              "id": "26d15a3b-e5bd-4568-88f9-1803fa2b92e0",
+              "name": "Van",
+              "color": "gray",
+              "description": null
+            },
+            {
+              "id": "56b2db84-743a-4054-b454-bb572382fdfd",
+              "name": "Prius",
+              "color": "purple",
+              "description": null
+            }
+          ]
+        }
+      },
+      "Mensagem 1": {
+        "id": "l%5Bex",
+        "name": "Mensagem 1",
+        "description": null,
+        "type": "formula",
+        "formula": {
+          "expression": "if(\n  {{notion:block_property:W%5BYd:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == 0,\n  \"Sem pedidos\",\n  \"Total de pedidos: \".style(\"b\") + format({{notion:block_property:W%5BYd:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}) + \" \" + if({{notion:block_property:W%5BYd:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}} == 1, \"pedido\", \"pedidos\")\n)\n\n\n\n"
+        }
+      },
+      "% Adicional": {
+        "id": "nbn%3E",
+        "name": "% Adicional",
+        "description": null,
+        "type": "number",
+        "number": {
+          "format": "number"
+        }
+      },
+      "Pizza Bag": {
+        "id": "rVw%5D",
+        "name": "Pizza Bag",
+        "description": null,
+        "type": "select",
+        "select": {
+          "options": [
+            {
+              "id": "ef7f52d5-c182-4583-8c40-cefe2c395459",
+              "name": "1",
+              "color": "brown",
+              "description": null
+            },
+            {
+              "id": "cb1a0fea-e465-4564-aa0d-5b7e183a810c",
+              "name": "2",
+              "color": "red",
+              "description": null
+            },
+            {
+              "id": "43eadf00-a1a6-4e9d-9bcc-fbe48e841cfb",
+              "name": "3",
+              "color": "default",
+              "description": null
+            },
+            {
+              "id": "aa7ca569-2705-48f1-8bea-39845f7ce347",
+              "name": "4",
+              "color": "purple",
+              "description": null
+            },
+            {
+              "id": "c68025d5-ef1e-446f-86e0-1c2d19cfbe0c",
+              "name": "5",
+              "color": "orange",
+              "description": null
+            },
+            {
+              "id": "83de91c7-4bbe-4544-a465-cd866bc32084",
+              "name": "6",
+              "color": "gray",
+              "description": null
+            },
+            {
+              "id": "7effce8f-428c-4623-a4c5-e3f8cb496025",
+              "name": "7",
+              "color": "blue",
+              "description": null
+            },
+            {
+              "id": "700f7d3b-9a07-403e-a0d1-9b03517736a4",
+              "name": "8",
+              "color": "yellow",
+              "description": null
+            },
+            {
+              "id": "0923f338-1193-4e12-a04b-1b42946a9835",
+              "name": "9",
+              "color": "pink",
+              "description": null
+            },
+            {
+              "id": "9360ca79-6ca1-469a-827a-a4056bfee6a0",
+              "name": "10",
+              "color": "green",
+              "description": null
+            }
+          ]
+        }
+      },
+      "Retangular Bag": {
+        "id": "r%5CCP",
+        "name": "Retangular Bag",
+        "description": null,
+        "type": "select",
+        "select": {
+          "options": [
+            {
+              "id": "ef7f52d5-c182-4583-8c40-cefe2c395459",
+              "name": "1",
+              "color": "brown",
+              "description": null
+            },
+            {
+              "id": "cb1a0fea-e465-4564-aa0d-5b7e183a810c",
+              "name": "2",
+              "color": "red",
+              "description": null
+            },
+            {
+              "id": "43eadf00-a1a6-4e9d-9bcc-fbe48e841cfb",
+              "name": "3",
+              "color": "default",
+              "description": null
+            },
+            {
+              "id": "aa7ca569-2705-48f1-8bea-39845f7ce347",
+              "name": "4",
+              "color": "purple",
+              "description": null
+            },
+            {
+              "id": "c68025d5-ef1e-446f-86e0-1c2d19cfbe0c",
+              "name": "5",
+              "color": "orange",
+              "description": null
+            },
+            {
+              "id": "83de91c7-4bbe-4544-a465-cd866bc32084",
+              "name": "6",
+              "color": "gray",
+              "description": null
+            },
+            {
+              "id": "7effce8f-428c-4623-a4c5-e3f8cb496025",
+              "name": "7",
+              "color": "blue",
+              "description": null
+            },
+            {
+              "id": "700f7d3b-9a07-403e-a0d1-9b03517736a4",
+              "name": "8",
+              "color": "yellow",
+              "description": null
+            },
+            {
+              "id": "0923f338-1193-4e12-a04b-1b42946a9835",
+              "name": "9",
+              "color": "pink",
+              "description": null
+            },
+            {
+              "id": "9360ca79-6ca1-469a-827a-a4056bfee6a0",
+              "name": "10",
+              "color": "green",
+              "description": null
+            }
+          ]
+        }
+      },
+      "Contato": {
+        "id": "uox%3C",
+        "name": "Contato",
+        "description": null,
+        "type": "url",
+        "url": {}
+      },
+      "Documentos & Contratos ": {
+        "id": "wvsM",
+        "name": "Documentos & Contratos ",
+        "description": null,
+        "type": "relation",
+        "relation": {
+          "database_id": "244e8d38-9ad5-81d8-96cf-cefd9db2000d",
+          "synced_property_name": "Colobador",
+          "synced_property_id": "VScZ"
+        }
+      },
+      "Foto": {
+        "id": "z%60%7C%5E",
+        "name": "Foto",
+        "description": null,
+        "type": "files",
+        "files": {}
+      },
+      "Tempo de Empresa": {
+        "id": "~%7B%3Cj",
+        "name": "Tempo de Empresa",
+        "description": null,
+        "type": "formula",
+        "formula": {
+          "expression": "ifs(dateBetween(now(), {{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"days\")<31,\n\tformat(round((dateBetween(now(),{{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"days\") % 365) % 30.5)) + \" Dias\",\n\t dateBetween(now(), {{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"days\")<365,\n\tformat(dateBetween(now(), {{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"months\") % 12) + \" Meses \" + format(round((dateBetween(now(),{{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"days\") % 365) % 30.5)) + \" Dias\",format(dateBetween(now(), {{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"years\")) + \" Anos \" + format(dateBetween(now(), {{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"months\") % 12) + \" Meses \" + format(round((dateBetween(now(),{{notion:block_property:NBr%3A:00000000-0000-0000-0000-000000000000:05fef4ee-eb6a-454f-985b-37498d8134d3}}, \"days\") % 365) % 30.5)) + \" Dias\")"
+        }
+      },
+      "Name": {
+        "id": "title",
+        "name": "Name",
+        "description": null,
+        "type": "title",
+        "title": {}
+      }
+    },
+    "parent": {
+      "type": "page_id",
+      "page_id": "241e8d38-9ad5-8070-946c-f9a0a58ba033"
+    },
+    "url": "https://www.notion.so/230e8d389ad5806aa9efe8a4d9ad4240",
+    "public_url": null,
+    "archived": false,
+    "in_trash": false,
+    "request_id": "4b66ecbb-e888-47ef-b224-c581a7192933"
+  }
+]

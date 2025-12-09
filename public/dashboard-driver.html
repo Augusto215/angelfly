@@ -5,20 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AngelFly - Driver Dashboard</title>
 
-  <!-- Bootstrap 5 -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
   <link rel="icon" type="image/x-icon" href="img/logo-angel (1) (1).ico" />
 
-  <!-- Bootstrap Icons -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
   />
 
-  <!-- jsPDF UMD -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
@@ -210,7 +207,6 @@
 <body>
   <div class="app-shell">
 
-    <!-- TOPBAR -->
     <header class="topbar">
       <div class="container d-flex justify-content-between align-items-center">
         <div class="brand">
@@ -227,10 +223,8 @@
       </div>
     </header>
 
-    <!-- CONTENT -->
     <div class="content-wrap container">
 
-      <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar-card">
           <div class="sidebar-item active" onclick="setSection('dashboard')">
@@ -257,7 +251,6 @@
         </div>
       </aside>
 
-      <!-- MAIN PANEL -->
       <div class="d-flex flex-column align-items-end" style="width:100%;">
         <main class="main-panel">
 
@@ -290,7 +283,6 @@
             </div>
           </section>
 
-          <!-- debug viewer (hidden by default) -->
           <div id="debugBox" class="debug-box"></div>
 
         </main>
@@ -313,6 +305,7 @@
     const USER_CONTEXT_URL = "/api/user/context";
     const DEBUG = false; // set true to show debug box
 
+    let USER_NAME = "Driver"; // <-- NOVO: Variável global para o nome do motorista
     let CURRENT_DRIVER_MATCH_ID = null;
     let CURRENT_ROWS = [];
     let CURRENT_WEEK_LABEL = "";
@@ -456,6 +449,10 @@
 
         document.getElementById("topUserName").textContent = displayName;
         document.getElementById("driverName").textContent = displayName;
+        
+        // NOVO: Captura o nome para o export
+        USER_NAME = displayName; 
+
         logDebug("driver_match_id:", CURRENT_DRIVER_MATCH_ID, "week_start_day:", CURRENT_WEEK_START_DAY);
       }catch(e){
         console.error(e);
@@ -678,10 +675,17 @@
       const csvContent = "\uFEFF" + lines.join("\n");
       const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
       const url = URL.createObjectURL(blob);
+      
       const labelSafe = (document.getElementById("weekLabel").textContent || "week").replace(/\s+/g,"_").replace(/[^\w\-]/g,"");
+      
+      // NOVO: Adiciona o nome do motorista ao nome do arquivo
+      const fileSafeName = (USER_NAME || "driver")
+          .replace(/\s+/g, "_")
+          .replace(/[^ \w\-]/g, "");
+
       const a = document.createElement("a");
       a.href = url;
-      a.download = `angelfly_driver_${labelSafe}.csv`;
+      a.download = `angelFly_driver_${fileSafeName}_${labelSafe}.csv`; // <-- MODIFICADO
       document.body.appendChild(a); a.click(); a.remove();
       URL.revokeObjectURL(url);
     }
@@ -749,7 +753,13 @@
       doc.text(`TOTAL: $${total}`, 520, y, { align: "right" });
 
       const labelSafe = (document.getElementById("weekLabel").textContent || "week").replace(/\s+/g,"_").replace(/[^\w\-]/g,"");
-      doc.save(`angelfly_driver_${labelSafe}.pdf`);
+      
+      // NOVO: Adiciona o nome do motorista ao nome do arquivo
+      const fileSafeName = (USER_NAME || "driver")
+          .replace(/\s+/g, "_")
+          .replace(/[^ \w\-]/g, "");
+
+      doc.save(`angelFly_driver_${fileSafeName}_${labelSafe}.pdf`); // <-- MODIFICADO
     }
 
     // -----------------------------

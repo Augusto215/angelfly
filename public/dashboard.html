@@ -5,14 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>AngelFly - Dashboard</title>
 
-  <!-- Bootstrap 5 -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet"
   />
     <link rel="icon" type="image/x-icon" href="img/logo-angel (1) (1).ico" />
 
-  <!-- Bootstrap Icons -->
   <link
     rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css"
@@ -205,7 +203,6 @@
 <body>
   <div class="app-shell">
 
-    <!-- TOPBAR -->
     <header class="topbar">
       <div class="container d-flex justify-content-between align-items-center">
         <div class="brand">
@@ -222,10 +219,8 @@
       </div>
     </header>
 
-    <!-- CONTENT -->
     <div class="content-wrap container">
 
-      <!-- SIDEBAR -->
       <aside class="sidebar">
         <div class="sidebar-card">
           <div class="sidebar-item active" onclick="setSection('dashboard')">
@@ -252,7 +247,6 @@
         </div>
       </aside>
 
-      <!-- MAIN PANEL -->
       <div class="d-flex flex-column align-items-end" style="width:100%;">
         <main class="main-panel">
 
@@ -285,7 +279,6 @@
             </div>
           </section>
 
-          <!-- debug viewer -->
           <div id="debugBox" class="debug-box"></div>
 
         </main>
@@ -305,10 +298,10 @@
     </div>
   </div>
 
-  <!-- jsPDF UMD -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <script>
+    let USER_NAME = "Restaurant";
     // -----------------------------
     // CONFIG
     // -----------------------------
@@ -474,6 +467,9 @@
 
         document.getElementById("topUserName").textContent = displayName;
         document.getElementById("restaurantName").textContent = displayName;
+        
+        // CAPTURA O NOME DE USUÁRIO PARA USO NO EXPORT
+        USER_NAME = ctx?.restaurant?.restaurant_name || "Restaurant"; 
 
         logDebug("Role:", CURRENT_ROLE);
         logDebug("restaurant_match_id:", CURRENT_RESTAURANT_MATCH_ID);
@@ -713,162 +709,146 @@
     }
 
     function exportCSV(){
-      const rows = CURRENT_ROWS || [];
-      if(!rows.length){
-        alert("Não tem pedidos para exportar nessa semana.");
-        return;
-      }
+        const rows = CURRENT_ROWS || [];
+        if(!rows.length){
+            alert("Não tem pedidos para exportar nessa semana.");
+            return;
+        }
+        const header = ["Order Code", "Day", "Customer", "Value"];
+        const lines = [
+            header.join(","),
+            ...rows.map(r => ([
+                csvEscape(r.code), // ID completo
+                csvEscape(r.day),
+                csvEscape(r.customer),
+                csvEscape(Number(r.value).toFixed(2)),
+            ]).join(","))
+        ];
 
-      const header = ["Order Code", "Day", "Customer", "Value"];
+        const csvContent = "\uFEFF" + lines.join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        
+        // Geração do nome do arquivo com Nome do Usuário + Data/Período
+        const fileSafeLabel = (CURRENT_WEEK_LABEL || "week")
+            .replace(/\s+/g, "_")
+            .replace(/[^ \w\-]/g, "");
 
-      const lines = [
-        header.join(","),
-        ...rows.map(r => ([
-          csvEscape(r.code),                 // ID completo
-          csvEscape(r.day),
-          csvEscape(r.customer),
-          csvEscape(Number(r.value).toFixed(2)),
-        ]).join(","))
-      ];
+        const fileSafeName = (USER_NAME || "restaurant")
+            .replace(/\s+/g, "_")
+            .replace(/[^ \w\-]/g, "");
 
-      const csvContent = "\uFEFF" + lines.join("\n");
-      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
-      const url = URL.createObjectURL(blob);
-
-      const fileSafeLabel = (CURRENT_WEEK_LABEL || "week")
-        .replace(/\s+/g, "_")
-        .replace(/[^\w\-]/g, "");
-
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `angelFly_${fileSafeLabel}.csv`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-
-      URL.revokeObjectURL(url);
-      logDebug("CSV exported:", a.download, "rows:", rows.length);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `angelFly_${fileSafeName}_${fileSafeLabel}.csv`; // Nome do arquivo atualizado
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+        logDebug("CSV exported:", a.download, "rows:", rows.length);
     }
 
     // -----------------------------
     // EXPORT PDF (IDs COMPLETOS, SEM SOBREPOR)
     // -----------------------------
-    function exportPDF(){
-      const rows = CURRENT_ROWS || [];
-      if (!rows.length) {
-        alert("Não tem pedidos para exportar nessa semana.");
-        return;
-      }
-
-      if (!window.jspdf || !window.jspdf.jsPDF) {
-        alert("Biblioteca de PDF não carregou. Tente recarregar a página.");
-        return;
-      }
-
-      const { jsPDF } = window.jspdf;
-      const doc = new jsPDF();
-
-      const restaurantName = document.getElementById("restaurantName")?.textContent || "-";
-      const weekLabel = CURRENT_WEEK_LABEL || "-";
-      const total = rows.reduce((acc, r)=> acc + r.value, 0).toFixed(2);
-
-      // Config de layout
-      const fontSize = 10;
-      const lineHeight = 5; // distância entre linhas dentro da mesma linha lógica
-      doc.setFontSize(fontSize);
-
-      let y = 15;
-
-      // Título
-      doc.setFontSize(14);
-      doc.text("AngelFly - Weekly Report", 14, y);
-      y += 8;
-
-      doc.setFontSize(11);
-      doc.text(`Restaurant: ${restaurantName}`, 14, y);
-      y += 6;
-      doc.text(`Week: ${weekLabel}`, 14, y);
-      y += 10;
-
-      // Cabeçalho da tabela
-      doc.setFontSize(fontSize);
-      doc.text("Order", 14, y);
-      doc.text("Day", 60, y);
-      doc.text("Customer", 90, y);
-      doc.text("Value", 190, y, { align: "right" });
-
-      y += 4;
-      doc.line(14, y, 196, y);
-      y += 6;
-
-      const pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
-
-      rows.forEach((r) => {
-        const fullCode = r.code ? String(r.code) : "--";
-        const customerText = (r.customer || "--").toString();
-
-        // Quebra o Order ID e o Customer em múltiplas linhas
-        const codeLines = doc.splitTextToSize(fullCode, 40);   // ~40px de largura
-        const custLines = doc.splitTextToSize(customerText, 80); // ~80px de largura
-
-        const maxLines = Math.max(codeLines.length, custLines.length);
-        const rowHeight = maxLines * lineHeight + 2;
-
-        // Se não couber na página atual, pula pra próxima antes de desenhar
-        if (y + rowHeight > pageHeight - 20) {
-          doc.addPage();
-          y = 20;
-
-          // Cabeçalho em nova página
-          doc.setFontSize(fontSize);
-          doc.text("Order", 14, y);
-          doc.text("Day", 60, y);
-          doc.text("Customer", 90, y);
-          doc.text("Value", 190, y, { align: "right" });
-
-          y += 4;
-          doc.line(14, y, 196, y);
-          y += 6;
+    function exportPDF() {
+        const rows = CURRENT_ROWS || [];
+        if (!rows.length) {
+            alert("Não tem pedidos para exportar nessa semana.");
+            return;
+        }
+        if (!window.jspdf || !window.jspdf.jsPDF) {
+            alert("Erro ao carregar o gerador de PDF.");
+            return;
         }
 
-        // Desenha as linhas
-        for (let i = 0; i < maxLines; i++) {
-          const lineY = y + i * lineHeight;
+        // Usando A4 (padrão)
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        let y = 20;
+        const pageHeight = doc.internal.pageSize.height;
+        const total = (rows || []).reduce((acc, r) => acc + (Number(r.value) || 0), 0).toFixed(2);
+        const date = new Date().toLocaleDateString("pt-BR", { year: 'numeric', month: '2-digit', day: '2-digit' });
 
-          if (codeLines[i]) {
-            doc.text(codeLines[i], 14, lineY);
-          }
+        // Título do PDF
+        doc.setFontSize(16);
+        doc.text(`AngelFly - Restaurant Report`, 14, y);
+        y += 8;
 
-          // Day e Value só na primeira linha
-          if (i === 0) {
-            doc.text(r.day || "--", 60, lineY);
-            doc.text(`$${r.value.toFixed(2)}`, 190, lineY, { align: "right" });
-          }
+        // Infos do Restaurante e Período
+        doc.setFontSize(12);
+        const restaurantName = document.getElementById("restaurantName").textContent;
+        doc.text(`Restaurant: ${restaurantName}`, 14, y);
+        doc.text(`Period: ${CURRENT_WEEK_LABEL}`, 14, y + 6);
+        doc.text(`Generated on: ${date}`, 14, y + 12);
+        doc.text(`Total: $${total}`, 190, y + 12, { align: "right" });
+        y += 24;
 
-          if (custLines[i]) {
-            doc.text(custLines[i], 90, lineY);
-          }
-        }
+        // Cabeçalho da tabela
+        const fontSize = 10;
+        const lineHeight = 5;
+        const rowHeight = 6;
+        doc.setFontSize(fontSize);
+        doc.text("Order", 14, y);
+        doc.text("Day", 60, y);
+        doc.text("Customer", 90, y);
+        doc.text("Value", 190, y, { align: "right" });
+        y += 4;
+        doc.line(14, y, 196, y);
+        y += 6;
 
-        y += rowHeight;
-      });
+        // Desenha as linhas da tabela
+        rows.forEach(r => {
+            const orderCode = String(r.code || "--");
+            const codeLines = doc.splitTextToSize(orderCode, 45); // 45mm de largura
+            const maxLines = codeLines.length;
 
-      // Total
-      if (y > pageHeight - 20) {
-        doc.addPage();
-        y = 20;
-      }
-      y += 4;
-      doc.setFontSize(11);
-      doc.text(`Total: $${total}`, 190, y, { align: "right" });
+            // Verifica se precisa de nova página antes de desenhar
+            if (y + rowHeight > pageHeight - 20) {
+                doc.addPage();
+                y = 20;
+                // Cabeçalho em nova página
+                doc.setFontSize(fontSize);
+                doc.text("Order", 14, y);
+                doc.text("Day", 60, y);
+                doc.text("Customer", 90, y);
+                doc.text("Value", 190, y, { align: "right" });
+                y += 4;
+                doc.line(14, y, 196, y);
+                y += 6;
+            }
 
-      const fileSafeLabel = (CURRENT_WEEK_LABEL || "week")
-        .replace(/\s+/g, "_")
-        .replace(/[^\w\-]/g, "");
+            // Desenha as linhas
+            for (let i = 0; i < maxLines; i++) {
+                const lineY = y + i * lineHeight;
+                if (codeLines[i]) doc.text(codeLines[i], 14, lineY);
+            }
 
-      doc.save(`angelFly_${fileSafeLabel}.pdf`);
+            doc.text(r.day || "--", 60, y);
+            doc.text(r.customer || "--", 90, y);
+            doc.text(`$${Number(r.value || 0).toFixed(2)}`, 190, y, { align: "right" });
+
+            y += maxLines * lineHeight + 2; // Espaçamento entre linhas
+            doc.line(14, y, 196, y); // Linha divisória
+            y += 4;
+        });
+
+        // Total no final
+        doc.setFontSize(11);
+        doc.text(`Total: $${total}`, 190, y, { align: "right" });
+
+        // Geração do nome do arquivo com Nome do Usuário + Data/Período
+        const fileSafeLabel = (CURRENT_WEEK_LABEL || "week")
+            .replace(/\s+/g, "_")
+            .replace(/[^ \w\-]/g, "");
+        
+        const fileSafeName = (USER_NAME || "restaurant")
+            .replace(/\s+/g, "_")
+            .replace(/[^ \w\-]/g, "");
+
+        // Salva o PDF com o novo nome
+        doc.save(`angelFly_${fileSafeName}_${fileSafeLabel}.pdf`);
     }
-
     // -----------------------------
     // SIDEBAR
     // -----------------------------

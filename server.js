@@ -9,9 +9,11 @@ const crypto = require("crypto");
 require("dotenv").config();
 
 const app = express();
+const axios = require('axios'); // <-- ESTA LINHA É ESSENCIAL
 const PORT = process.env.PORT || 3000;
 const PUBLIC_DIR = path.join(__dirname, "public");
-
+const N8N_DRIVER_WEBHOOK = 'https://n8n.srv942429.hstgr.cloud/webhook/select_driver';
+const N8N_RESTAURANT_WEBHOOK = 'https://n8n.srv942429.hstgr.cloud/webhook/select_restaurant';
 // IMPORTANTE: usar a SERVICE ROLE KEY do Supabase no servidor
 const supabase = createClient(
   process.env.SUPABASE_URL,
@@ -876,6 +878,188 @@ app.get("/create-user", requireAdmin, (req, res) => {
   return res.sendFile(path.join(PUBLIC_DIR, "create-user.html"));
 });
 
+//// --- Rota para obter a lista de Drivers (COM LOGS DETALHADOS) ---
+app.get('/api/drivers', async (req, res) => {
+  try {
+    console.log('➡️ /api/drivers -> solicitando n8n em', N8N_DRIVER_WEBHOOK);
+    const response = await axios.get(N8N_DRIVER_WEBHOOK, { timeout: 15000 });
+
+    console.log('⬅️ n8n driver -> status:', response.status);
+    // log das principais chaves do header (evita imprimir tudo)
+    const headerKeys = response.headers ? Object.keys(response.headers).slice(0, 10) : [];
+    console.log('   • headers keys:', headerKeys);
+
+    const raw = response.data;
+    // mostra tipo e preview
+    const rawType = Array.isArray(raw) ? 'array' : (raw && typeof raw === 'object' ? 'object' : typeof raw);
+    let rawPreview = '';
+    try {
+      rawPreview = typeof raw === 'string' ? raw : JSON.stringify(Array.isArray(raw) ? raw.slice(0, 5) : raw, null, 2);
+    } catch (e) {
+      rawPreview = '<non-serializable>';
+    }
+    console.log(`   • body tipo: ${rawType} / preview (até 8k):`, String(rawPreview).slice(0, 8000));
+    
+    // tentativa cuidadosa de extrair driver_list
+    let driversList = [];
+    if (Array.isArray(raw) && raw.length > 0 && raw[0] && raw[0].driver_list) {
+      driversList = raw[0].driver_list;
+      console.log('   • Extraído driversList via raw[0].driver_list (array)');
+    } else if (raw && raw.driver_list && Array.isArray(raw.driver_list)) {
+      driversList = raw.driver_list;
+      console.log('   • Extraído driversList via raw.driver_list (object)');
+    } else if (raw && Array.isArray(raw.items)) {
+      // fallback n8n older shape
+      driversList = raw.items.flatMap(it => (it && it.driver_list) ? it.driver_list : []);
+      console.log('   • Extraído driversList via raw.items -> agregando driver_list de itens');
+    } else if (Array.isArray(raw) && raw.length === 0) {
+      console.log('   • n8n retornou array vazio (no items)');
+      driversList = [];
+    } else {
+      // tenta heurística: procurar objetos que contenham "driver" em qualquer lugar
+      try {
+        const found = [];
+        const walk = (obj) => {
+          if (!obj || typeof obj !== 'object') return;
+          if (Array.isArray(obj)) {
+            obj.forEach(walk);
+            return;
+          }
+          for (const k of Object.keys(obj)) {
+            const v = obj[k];
+            if (k && k.toString().toLowerCase().includes('driver') && Array.isArray(v)) {
+              found.push(...v);
+            } else if (typeof v === 'object') {
+              walk(v);
+            }
+          }
+        };
+        walk(raw);
+        if (found.length) {
+          driversList = found;
+          console.log(`   • Heurística encontrou ${found.length} entries com chave contendo 'driver'`);
+        } else {
+          console.warn('   • Não foi possível localizar driver_list com heurísticas');
+        }
+      } catch (heurErr) {
+        console.warn('   • Erro na heurística de extração:', heurErr && heurErr.stack ? heurErr.stack : heurErr);
+      }
+    }
+
+    // garante que sempre devolvemos array
+    if (!Array.isArray(driversList)) {
+      console.warn('   • driver_list extraído não é array — convertendo para array vazio');
+      driversList = [];
+    }
+
+    console.log(`   • driversList final size: ${driversList.length}`);
+    return res.json(driversList);
+  } catch (error) {
+    // se axios retornou response (n8n deu 4xx/5xx), log detalhado
+    if (error.response) {
+      console.error('❌ Erro n8n driver - status:', error.response.status);
+      console.error('   • headers keys:', Object.keys(error.response.headers || {}).slice(0, 10));
+      try {
+        console.error('   • body preview:', JSON.stringify(error.response.data).slice(0, 2000));
+      } catch (e) {
+        console.error('   • body preview: <não serializável>');
+      }
+    } else {
+      console.error('❌ Erro ao buscar drivers do n8n:', error && error.stack ? error.stack : error);
+    }
+    return res.status(500).json({ error: 'Falha ao carregar lista de drivers.' });
+  }
+});
+
+// --- Rota para obter a lista de Restaurantes (COM LOGS DETALHADOS) ---
+app.get('/api/restaurants', async (req, res) => {
+  try {
+    console.log('➡️ /api/restaurants -> solicitando n8n em', N8N_RESTAURANT_WEBHOOK);
+    const response = await axios.get(N8N_RESTAURANT_WEBHOOK, { timeout: 15000 });
+
+    console.log('⬅️ n8n restaurant -> status:', response.status);
+    const headerKeys = response.headers ? Object.keys(response.headers).slice(0, 10) : [];
+    console.log('   • headers keys:', headerKeys);
+
+    const raw = response.data;
+    const rawType = Array.isArray(raw) ? 'array' : (raw && typeof raw === 'object' ? 'object' : typeof raw);
+    let rawPreview = '';
+    try {
+      rawPreview = typeof raw === 'string' ? raw : JSON.stringify(Array.isArray(raw) ? raw.slice(0, 5) : raw, null, 2);
+    } catch (e) {
+      rawPreview = '<non-serializable>';
+    }
+    console.log(`   • body tipo: ${rawType} / preview (até 8k):`, String(rawPreview).slice(0, 8000));
+
+    // tentativa cuidadosa de extrair restaurant_list
+    let restaurantsList = [];
+    if (Array.isArray(raw) && raw.length > 0 && raw[0] && raw[0].restaurant_list) {
+      restaurantsList = raw[0].restaurant_list;
+      console.log('   • Extraído restaurantsList via raw[0].restaurant_list (array)');
+    } else if (raw && raw.restaurant_list && Array.isArray(raw.restaurant_list)) {
+      restaurantsList = raw.restaurant_list;
+      console.log('   • Extraído restaurantsList via raw.restaurant_list (object)');
+    } else if (raw && Array.isArray(raw.items)) {
+      restaurantsList = raw.items.flatMap(it => (it && it.restaurant_list) ? it.restaurant_list : []);
+      console.log('   • Extraído restaurantsList via raw.items -> agregando restaurant_list de itens');
+    } else if (Array.isArray(raw) && raw.length === 0) {
+      console.log('   • n8n retornou array vazio (no items)');
+      restaurantsList = [];
+    } else {
+      // heurística
+      try {
+        const found = [];
+        const walk = (obj) => {
+          if (!obj || typeof obj !== 'object') return;
+          if (Array.isArray(obj)) {
+            obj.forEach(walk);
+            return;
+          }
+          for (const k of Object.keys(obj)) {
+            const v = obj[k];
+            if (k && k.toString().toLowerCase().includes('restaurant') && Array.isArray(v)) {
+              found.push(...v);
+            } else if (typeof v === 'object') {
+              walk(v);
+            }
+          }
+        };
+        walk(raw);
+        if (found.length) {
+          restaurantsList = found;
+          console.log(`   • Heurística encontrou ${found.length} entries com chave contendo 'restaurant'`);
+        } else {
+          console.warn('   • Não foi possível localizar restaurant_list com heurísticas');
+        }
+      } catch (heurErr) {
+        console.warn('   • Erro na heurística de extração:', heurErr && heurErr.stack ? heurErr.stack : heurErr);
+      }
+    }
+
+    if (!Array.isArray(restaurantsList)) {
+      console.warn('   • restaurant_list extraído não é array — convertendo para array vazio');
+      restaurantsList = [];
+    }
+
+    console.log(`   • restaurantsList final size: ${restaurantsList.length}`);
+    return res.json(restaurantsList);
+  } catch (error) {
+    if (error.response) {
+      console.error('❌ Erro n8n restaurant - status:', error.response.status);
+      console.error('   • headers keys:', Object.keys(error.response.headers || {}).slice(0, 10));
+      try {
+        console.error('   • body preview:', JSON.stringify(error.response.data).slice(0, 2000));
+      } catch (e) {
+        console.error('   • body preview: <não serializável>');
+      }
+    } else {
+      console.error('❌ Erro ao buscar restaurantes do n8n:', error && error.stack ? error.stack : error);
+    }
+    return res.status(500).json({ error: 'Falha ao carregar lista de restaurantes.' });
+  }
+});
+
+
 app.get("/health", (req, res) => {
   res.json({ status: "healthy", timestamp: new Date().toISOString() });
 });
@@ -891,3 +1075,4 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+

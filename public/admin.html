@@ -728,10 +728,12 @@
               </select>
             </div>
             
-            <div class="mb-3">
-              <label for="edit_match_id" class="form-label">Match ID</label>
-              <input type="text" class="form-control" id="edit_match_id" name="match_id">
-              <div class="form-text">ID used to match with Notion or other systems.</div>
+            <div id="editMatchIdWrapper" class="mb-3">
+                <label for="edit_match_id" class="form-label">Match ID</label>
+                <select class="form-select" id="edit_match_id" name="match_id">
+                    <option value="">(Carregando lista...)</option>
+                </select>
+                <div class="form-text">ID usado para vincular com Restaurantes/Drivers no Notion.</div>
             </div>
 
             <div id="editWeekConfigWrapper">
@@ -1010,12 +1012,84 @@
 
 
     // --- User Editing (Update) ---
+    
+    const MATCH_ID_SELECT = document.getElementById("edit_match_id");
 
-    // Função auxiliar para controlar o display da configuração da semana no modal
-    function toggleEditWeekFields(role){
-        const wrapper = document.getElementById("editWeekConfigWrapper");
-        wrapper.style.display = role === "restaurant" ? "block" : "none";
+    /**
+     * Busca os IDs e Nomes de Restaurantes ou Drivers e preenche o select.
+     * @param {string} role A role do usuário ('driver' ou 'restaurant').
+     * @param {string} currentMatchId O Match ID atual do usuário para pré-selecionar.
+     */
+    async function loadMatchIdOptionsForEditModal(role, currentMatchId = null) {
+        MATCH_ID_SELECT.innerHTML = '<option value="">Carregando...</option>';
+        MATCH_ID_SELECT.disabled = true;
+
+        let apiUrl = '';
+        role = role.toLowerCase();
+
+        if (role === 'driver') {
+            apiUrl = '/api/drivers';
+        } else if (role === 'restaurant') {
+            apiUrl = '/api/restaurants';
+        } else {
+            // Se a role não é relevante, limpa e desabilita
+            MATCH_ID_SELECT.innerHTML = '<option value="">N/A (Somente para Driver/Restaurant)</option>';
+            MATCH_ID_SELECT.disabled = true;
+            return;
+        }
+
+        try {
+            // Chamada à nova rota do server.js
+            const response = await fetch(apiUrl);
+            if (!response.ok) throw new Error("Failed to fetch list.");
+            
+            // O response.json() já é o array de { id, name }
+            const data = await response.json(); 
+            
+            // Limpa e insere a opção padrão
+            MATCH_ID_SELECT.innerHTML = '<option value="">(Selecione um ID)</option>';
+
+            // Preenche o select com ID e Nome
+            data.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id; 
+                option.textContent = item.name;
+                
+                // Pré-seleciona o item se o ID corresponder
+                if (currentMatchId && item.id === currentMatchId) {
+                    option.selected = true;
+                }
+                
+                MATCH_ID_SELECT.appendChild(option);
+            });
+            MATCH_ID_SELECT.disabled = false;
+
+        } catch (error) {
+            console.error('Erro ao carregar lista de Match IDs:', error);
+            MATCH_ID_SELECT.innerHTML = '<option value="">Erro ao carregar lista</option>';
+            MATCH_ID_SELECT.disabled = true;
+        }
     }
+
+    // Função auxiliar para controlar a visibilidade da configuração da semana e carregar o Match ID
+    function toggleEditFieldsVisibility(role, currentMatchId = null){
+        const wrapperWeek = document.getElementById("editWeekConfigWrapper");
+        
+        role = role.toLowerCase();
+        
+        // 1. Configuração de Semana (Apenas para Restaurante)
+        wrapperWeek.style.display = role === "restaurant" ? "block" : "none";
+        
+        // 2. Carrega o Match ID para Driver/Restaurant
+        if (role === "restaurant" || role === "driver") {
+            loadMatchIdOptionsForEditModal(role, currentMatchId);
+        } else {
+            // Limpa o select para outros roles (ex: Admin)
+            MATCH_ID_SELECT.innerHTML = '<option value="">N/A (Somente para Driver/Restaurant)</option>';
+            MATCH_ID_SELECT.disabled = true;
+        }
+    }
+
 
     async function openEditModal(userId){
         showFeedback("success", ""); // Limpa feedback
@@ -1040,7 +1114,7 @@
             document.getElementById("edit_email").value = user.email || '[Email not found]'; 
             document.getElementById("edit_full_name").value = user.full_name || '';
             document.getElementById("edit_user_role").value = user.user_role || 'restaurant';
-            document.getElementById("edit_match_id").value = user.match_id || '';
+            // O campo Match ID será populado pela função toggleEditFieldsVisibility
             document.getElementById("edit_password").value = ''; // Sempre limpa o campo de senha
             document.getElementById("edit_is_active").checked = user.is_active;
             
@@ -1048,11 +1122,18 @@
             document.getElementById("edit_week_start_day").value = user.week_start_day !== null ? String(user.week_start_day) : '';
             document.getElementById("edit_week_end_day").value = user.week_end_day !== null ? String(user.week_end_day) : '';
 
-            // 2. Controla a visibilidade da configuração da semana
-            toggleEditWeekFields(user.user_role);
+            // 2. Controla a visibilidade da configuração da semana e carrega o Match ID
+            const initialRole = user.user_role || 'restaurant';
+            const initialMatchId = user.match_id || null;
+            
+            // Carrega as opções do select e pré-seleciona o Match ID atual
+            toggleEditFieldsVisibility(initialRole, initialMatchId);
 
             // 3. Adiciona listener de mudança de role
-            document.getElementById("edit_user_role").onchange = (e) => toggleEditWeekFields(e.target.value);
+            document.getElementById("edit_user_role").onchange = (e) => {
+                // Ao mudar a role, resetamos o Match ID (null) e carregamos as novas opções
+                toggleEditFieldsVisibility(e.target.value, null); 
+            };
 
             // 4. Abre o modal
             editModalInstance.show();
@@ -1060,8 +1141,7 @@
         } catch (e) {
             // Isso irá exibir a mensagem de erro da API ou a de comunicação
             showFeedback("error", "Error loading user data: " + (e.message || "Communication error"));
-            document.querySelector(".panel-header").insertAdjacentHTML('afterend', 
-              `<div class="alert alert-danger mt-3">DEBUG ERROR: ${e.message}</div>`);
+            // Manter o debug opcional, removido do output final
         }
     }
 
@@ -1095,7 +1175,8 @@
         const password = document.getElementById("edit_password").value.trim();
         const user_role = document.getElementById("edit_user_role").value;
         const full_name = document.getElementById("edit_full_name").value.trim();
-        const match_id = document.getElementById("edit_match_id").value.trim();
+        // ** Agora pega o valor do select **
+        const match_id = document.getElementById("edit_match_id").value.trim(); 
         const is_active = document.getElementById("edit_is_active").checked;
         const week_start_day_raw = document.getElementById("edit_week_start_day").value;
         const week_end_day_raw = document.getElementById("edit_week_end_day").value;
@@ -1118,7 +1199,8 @@
             email,
             user_role,
             full_name,
-            match_id: match_id || null,
+            // Se o select for vazio, envia null
+            match_id: match_id || null, 
             is_active,
             week_start_day,
             week_end_day
