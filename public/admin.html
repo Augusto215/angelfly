@@ -673,7 +673,7 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Role</th>
-                    <th>Match ID</th>
+                    <th>Notion ID</th>
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -729,11 +729,11 @@
             </div>
             
             <div id="editMatchIdWrapper" class="mb-3">
-                <label for="edit_match_id" class="form-label">Match ID</label>
+                <label for="edit_match_id" class="form-label">Notion ID</label>
                 <select class="form-select" id="edit_match_id" name="match_id">
-                    <option value="">(Carregando lista...)</option>
+                    <option value="">(Loading List...)</option>
                 </select>
-                <div class="form-text">ID usado para vincular com Restaurantes/Drivers no Notion.</div>
+                <div class="form-text">Notion match ID.</div>
             </div>
 
             <div id="editWeekConfigWrapper">
@@ -1021,7 +1021,7 @@
      * @param {string} currentMatchId O Match ID atual do usuário para pré-selecionar.
      */
     async function loadMatchIdOptionsForEditModal(role, currentMatchId = null) {
-        MATCH_ID_SELECT.innerHTML = '<option value="">Carregando...</option>';
+        MATCH_ID_SELECT.innerHTML = '<option value="">Loading...</option>';
         MATCH_ID_SELECT.disabled = true;
 
         let apiUrl = '';
@@ -1047,7 +1047,7 @@
             const data = await response.json(); 
             
             // Limpa e insere a opção padrão
-            MATCH_ID_SELECT.innerHTML = '<option value="">(Selecione um ID)</option>';
+            MATCH_ID_SELECT.innerHTML = '<option value="">(Select an ID)</option>';
 
             // Preenche o select com ID e Nome
             data.forEach(item => {

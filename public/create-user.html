@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
   <html lang="en-US">
   <head>
     <meta charset="UTF-8" />
@@ -564,7 +564,7 @@
                   </div>
                   
                   <div class="col-md-6" id="matchIdWrapper">
-                      <label for="match_id" class="form-label">Match ID</label>
+                      <label for="match_id" class="form-label">Notion ID</label>
                       <select class="form-select" id="match_id" name="match_id">
                           <option value="">(Loading list...)</option>
                       </select>
@@ -730,7 +730,7 @@
        * @param {string} role A role do usuário ('driver' ou 'restaurant').
        */
       async function loadMatchIdOptionsForCreateForm(role) {
-          MATCH_ID_SELECT.innerHTML = '<option value="">Carregando...</option>';
+          MATCH_ID_SELECT.innerHTML = '<option value="">Loading...</option>';
           MATCH_ID_SELECT.disabled = true;
 
           let apiUrl = '';
@@ -775,11 +775,6 @@
       }
 
       /**
-       * Controla a visibilidade dos campos de Match ID e Configuração de Semana
-       * e dispara o carregamento das listas.
-       * @param {string} role A role do usuário.
-       */
-      /**
  * Controla a visibilidade dos campos de Match ID e Configuração de Semana
  * e dispara o carregamento das listas.
  * @param {string} role A role do usuário.
@@ -790,18 +785,18 @@ function toggleMatchIdAndWeekFields(role) {
     // 1. Configuração de Semana (Apenas para Restaurante)
     WEEK_CONFIG_WRAPPER.style.display = role === "restaurant" ? "block" : "none";
     
-    // 2. Campo Match ID: Visível APENAS para 'restaurant' (AQUI ESTÁ A MUDANÇA)
-    const isMatchIdRelevant = role === "restaurant"; 
+    // 2. Campo Match ID: Visível para 'restaurant' OU 'driver'
+    // ALTERAÇÃO: Inclui 'driver' para que o campo Match ID seja relevante para ambas as roles.
+    const isMatchIdRelevant = role === "restaurant" || role === "driver"; 
     
-    // Mostra o wrapper se a role for 'restaurant', senão esconde.
+    // Mostra o wrapper se a role for 'restaurant' ou 'driver', senão esconde.
     MATCH_ID_WRAPPER.style.display = isMatchIdRelevant ? "block" : "none";
     
     if (isMatchIdRelevant) {
-        // Se for 'restaurant', carrega a lista
+        // Se for 'restaurant' ou 'driver', carrega a lista
         loadMatchIdOptionsForCreateForm(role);
     } else {
-        // Limpa e desabilita o select quando não for 'restaurant', 
-        // embora o campo esteja escondido, é bom para consistência.
+        // Limpa e desabilita o select quando não for relevante
         MATCH_ID_SELECT.innerHTML = '<option value="">N/A</option>';
         MATCH_ID_SELECT.disabled = true;
     }
