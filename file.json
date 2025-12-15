@@ -1,0 +1,1285 @@
+[
+   {
+      "object":"page",
+      "id":"2bbe8d38-9ad5-81c2-862c-f763edb49798",
+      "created_time":"2025-11-30T23:24:00.000Z",
+      "last_edited_time":"2025-12-05T16:22:00.000Z",
+      "created_by":{
+         "object":"user",
+         "id":"2b206613-36c0-4fb6-aa9c-eb66d055ddc7"
+      },
+      "last_edited_by":{
+         "object":"user",
+         "id":"299d872b-594c-8121-a05c-00023e7e3d9d"
+      },
+      "cover":null,
+      "icon":null,
+      "parent":{
+         "type":"database_id",
+         "database_id":"230e8d38-9ad5-80ca-9498-c4fe60b52663"
+      },
+      "archived":false,
+      "in_trash":false,
+      "is_locked":false,
+      "properties":{
+         "ID REST":{
+            "id":"%3ADhO",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"unique_id",
+                     "unique_id":{
+                        "prefix":null,
+                        "number":2
+                     }
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Real finalizar o pedido":{
+            "id":"%3AnZb",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T11:14:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "SD Delivery Longitude":{
+            "id":"%3B%3AhD",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"number",
+                     "number":-71.05624
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Last map Update":{
+            "id":"%3B%3D%3CJ",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T10:55:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "Auto-chegada-cliente-confirmacao":{
+            "id":"%3BSWy",
+            "type":"number",
+            "number":null
+         },
+         "Driver Delivery fee  Oficial":{
+            "id":"%3C%3A%3Dr",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":5
+            }
+         },
+         "pedidos financeiroooo":{
+            "id":"%3CX%5EM",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "Formula Loading Dock":{
+            "id":"%3C%5CrH",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Manual Driver Delivery Fee ":{
+            "id":"%3C%7C%60G",
+            "type":"number",
+            "number":5
+         },
+         "Tip pago Angel Fly:":{
+            "id":"%3DCIb",
+            "type":"number",
+            "number":76.17
+         },
+         "ID":{
+            "id":"%3FxAW",
+            "type":"number",
+            "number":null
+         },
+         "Pedido criado por:":{
+            "id":"%40IPM",
+            "type":"created_by",
+            "created_by":{
+               "object":"user",
+               "id":"2b206613-36c0-4fb6-aa9c-eb66d055ddc7",
+               "name":"n8n",
+               "avatar_url":"https://s3-us-west-2.amazonaws.com/public.notion-static.com/9135ff0a-8e58-4acf-bb5a-9abf444c5dcb/e0119f29-e6a1-4544-aa96-382e9834b026.jpeg",
+               "type":"bot",
+               "bot":{
+                  
+               }
+            }
+         },
+         "ETA para Restaurante em minutos":{
+            "id":"%40iLO",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":0.1
+            }
+         },
+         "ETA-restaurant":{
+            "id":"A%60qZ",
+            "type":"number",
+            "number":6
+         },
+         "ETA-client":{
+            "id":"B%3Cjv",
+            "type":"number",
+            "number":522
+         },
+         "2. Pickup Address":{
+            "id":"Bgo%3F",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"69 Salem St, Boston, MA 02113"
+            }
+         },
+         "Duration Google Maps":{
+            "id":"CAT%5B",
+            "type":"number",
+            "number":5.783333333333333
+         },
+         "Driver Confirmou":{
+            "id":"CEBz",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T08:30:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "Enviar Pickup Message Slack":{
+            "id":"D%3E_%7B",
+            "type":"button",
+            "button":{
+               
+            }
+         },
+         "Rua_cliente_eta":{
+            "id":"DWnp",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Tempo Extra Rota":{
+            "id":"DuWf",
+            "type":"number",
+            "number":null
+         },
+         "7.5% Quantum ":{
+            "id":"E%5Bv%3C",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":8.5695
+            }
+         },
+         "Mensagem 01:":{
+            "id":"EgSr",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Painel de SUCESSO KPI/OKR Angel Fly":{
+            "id":"EngX",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "ADDRESS":{
+            "id":"EzSv",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"rich_text",
+                     "rich_text":[
+                        {
+                           "type":"text",
+                           "text":{
+                              "content":"160 Federal St\nBoston, MA 02110",
+                              "link":null
+                           },
+                           "annotations":{
+                              "bold":false,
+                              "italic":false,
+                              "strikethrough":false,
+                              "underline":false,
+                              "code":false,
+                              "color":"default"
+                           },
+                           "plain_text":"160 Federal St\nBoston, MA 02110",
+                           "href":null
+                        }
+                     ]
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Fórmula":{
+            "id":"GYXA",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Carregamento Formula 1":{
+            "id":"HtuO",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":7
+            }
+         },
+         "7.5% Reserva":{
+            "id":"ILXR",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":8.5695
+            }
+         },
+         "Adicional Driver Exp":{
+            "id":"IQIn",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"number",
+                     "number":null
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "ETA-Restaurante-cliente-Inicial":{
+            "id":"IQgn",
+            "type":"number",
+            "number":null
+         },
+         "Pick-up Latitude":{
+            "id":"Jn%5C%3B",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"number",
+                     "number":42.36336259999999
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Auto-saida-restaurante-confirmacao":{
+            "id":"KP%5Br",
+            "type":"number",
+            "number":null
+         },
+         "Rua_atual_driver":{
+            "id":"KhjR",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Order Placement DateTime":{
+            "id":"Kp%5CF",
+            "type":"created_time",
+            "created_time":"2025-11-30T23:24:00.000Z"
+         },
+         "ALERTAS SISTEMA 1":{
+            "id":"LAkF",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"🎉✅ Pickup calculado com sucesso! Tudo pronto."
+            }
+         },
+         "Driver Total Paid Manual":{
+            "id":"LkFi",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":25
+            }
+         },
+         "Auto-chegada-cliente":{
+            "id":"Mu%3Bg",
+            "type":"date",
+            "date":null
+         },
+         "SD Delivery Latitude":{
+            "id":"PFce",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"number",
+                     "number":42.35385
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Status do Pedido:":{
+            "id":"PdXB",
+            "type":"status",
+            "status":{
+               "id":"Q;|Y",
+               "name":"Finalizado com MENSAGEM",
+               "color":"green"
+            }
+         },
+         "💲 Delivery fee pago Angel Fly:":{
+            "id":"Q%3BB%7D",
+            "type":"number",
+            "number":38.09
+         },
+         "Delivery-uuid-ezcater":{
+            "id":"Q%3EGW",
+            "type":"rich_text",
+            "rich_text":[
+               {
+                  "type":"text",
+                  "text":{
+                     "content":"3d831b13-c06b-4e39-b478-45236f26ac23",
+                     "link":null
+                  },
+                  "annotations":{
+                     "bold":false,
+                     "italic":false,
+                     "strikethrough":false,
+                     "underline":false,
+                     "code":false,
+                     "color":"default"
+                  },
+                  "plain_text":"3d831b13-c06b-4e39-b478-45236f26ac23",
+                  "href":null
+               }
+            ]
+         },
+         "Tempo Loading Dock":{
+            "id":"Qaas",
+            "type":"number",
+            "number":null
+         },
+         "Angel Fly Total ":{
+            "id":"RC%60l",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":114.26
+            }
+         },
+         "10. Loading Dock time":{
+            "id":"S%3C%3DK",
+            "type":"rollup",
+            "rollup":{
+               "type":"number",
+               "number":0,
+               "function":"sum"
+            }
+         },
+         "Liquid":{
+            "id":"SV%5Dn",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":60.695
+            }
+         },
+         "Mensagem ETA":{
+            "id":"Sjle",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "4. Client Phone":{
+            "id":"TJ%5Bj",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"phone_number",
+                     "phone_number":"2036043934"
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Último Acompanhamento":{
+            "id":"ThX%3C",
+            "type":"last_edited_time",
+            "last_edited_time":"2025-12-05T16:22:00.000Z"
+         },
+         "Carregamento Experiencia Driver":{
+            "id":"ToMt",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"select",
+                     "select":{
+                        "id":"77266b89-403c-4dbe-94f4-d5192401534b",
+                        "name":"Experiente",
+                        "color":"red"
+                     }
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "% Drivers":{
+            "id":"UUwI",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":0.218799229827
+            }
+         },
+         "Customer Name":{
+            "id":"WGs%7C",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"title",
+                     "title":[
+                        {
+                           "type":"text",
+                           "text":{
+                              "content":"JP Morgan",
+                              "link":null
+                           },
+                           "annotations":{
+                              "bold":false,
+                              "italic":false,
+                              "strikethrough":false,
+                              "underline":false,
+                              "code":false,
+                              "color":"default"
+                           },
+                           "plain_text":"JP Morgan",
+                           "href":null
+                        }
+                     ]
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Restaurant Name":{
+            "id":"Wduk",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"formula",
+                     "formula":{
+                        "type":"string",
+                        "string":"Ernesto's Pizza Boston"
+                     }
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Duplicado":{
+            "id":"X%7DOC",
+            "type":"checkbox",
+            "checkbox":false
+         },
+         "Pickup Address":{
+            "id":"Y%3CdN",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"rich_text",
+                     "rich_text":[
+                        {
+                           "type":"text",
+                           "text":{
+                              "content":"69 Salem St, Boston, MA 02113",
+                              "link":null
+                           },
+                           "annotations":{
+                              "bold":false,
+                              "italic":false,
+                              "strikethrough":false,
+                              "underline":false,
+                              "code":false,
+                              "color":"default"
+                           },
+                           "plain_text":"69 Salem St, Boston, MA 02113",
+                           "href":null
+                        }
+                     ]
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Instruçōes de Entrega":{
+            "id":"Y%40qN",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"rich_text",
+                     "rich_text":[
+                        {
+                           "type":"text",
+                           "text":{
+                              "content":"Sem instruções",
+                              "link":null
+                           },
+                           "annotations":{
+                              "bold":false,
+                              "italic":false,
+                              "strikethrough":false,
+                              "underline":false,
+                              "code":false,
+                              "color":"default"
+                           },
+                           "plain_text":"Sem instruções",
+                           "href":null
+                        }
+                     ]
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Auto-chegada-restaurante-confirmacao":{
+            "id":"YYYO",
+            "type":"number",
+            "number":null
+         },
+         "Notificatiion1D":{
+            "id":"ZVIA",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Traffic Google Maps ":{
+            "id":"ZXZl",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Driver Tip Oficial":{
+            "id":"ZezK",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":20
+            }
+         },
+         "Delivery Day Formula":{
+            "id":"Zp%3CV",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"12/01/2025"
+            }
+         },
+         "Payment  Status Resturant ":{
+            "id":"ZuBa",
+            "type":"select",
+            "select":null
+         },
+         "Formula Driver Tip":{
+            "id":"Z~%3F%3A",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":28.565
+            }
+         },
+         "Checklist Pedidos Restaurant El Jefes 1":{
+            "id":"%5BI%3CS",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "Real chegou restaurante":{
+            "id":"%5C%3A%3Bo",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T10:43:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "🕤 Order Delivery TIME:":{
+            "id":"%5Chxa",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T11:15:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "Automatic-Status-Update":{
+            "id":"%5DHz%5E",
+            "type":"status",
+            "status":{
+               "id":"a1fc1c6e-6d00-4f89-b2a4-536fed6d4bdc",
+               "name":"Not started",
+               "color":"default"
+            }
+         },
+         "Real saída restaurante":{
+            "id":"%5ElGo",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T11:02:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "Painel ETA ":{
+            "id":"_Sd%5C",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"Painel Distância Driver em minutos\n🍽️ Para restaurante:  0 min\n🏁 Para cliente:  9 min"
+            }
+         },
+         "Distance Miles Pickup to Dropoff":{
+            "id":"%60%5C~g",
+            "type":"number",
+            "number":1.46
+         },
+         "10% Outros":{
+            "id":"%60dR%5D",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":11.426
+            }
+         },
+         "Contato-driver":{
+            "id":"%60eAC",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"url",
+                     "url":"+18573702165"
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "5. ADDRESS ":{
+            "id":"%60qvH",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"160 Federal St\nBoston, MA 02110"
+            }
+         },
+         "Link WhatsApp":{
+            "id":"bJUx",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"No link available"
+            }
+         },
+         "❌ Carregamento Min":{
+            "id":"bk%3Aq",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":7
+            }
+         },
+         "Planejado chegada cliente":{
+            "id":"cZtk",
+            "type":"formula",
+            "formula":{
+               "type":"date",
+               "date":{
+                  "start":"2025-12-01T11:07:00.000-05:00",
+                  "end":null,
+                  "time_zone":null
+               }
+            }
+         },
+         "Last edited time":{
+            "id":"dIH%5C",
+            "type":"last_edited_time",
+            "last_edited_time":"2025-12-05T16:22:00.000Z"
+         },
+         " DRIVERS:":{
+            "id":"deza",
+            "type":"relation",
+            "relation":[
+               {
+                  "id":"230e8d38-9ad5-8042-8837-e39e82a62bf5"
+               }
+            ],
+            "has_more":false
+         },
+         "Controle de qualidade:":{
+            "id":"eJKY",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Delivery Time Formula":{
+            "id":"eJ%5Ev",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"04:15:00 PM"
+            }
+         },
+         "Fórmula 1":{
+            "id":"eL%7Cv",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":"US$ 25"
+            }
+         },
+         "Formula Driver Delivery Fee":{
+            "id":"eUNm",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":5
+            }
+         },
+         "Platform":{
+            "id":"ehQI",
+            "type":"select",
+            "select":{
+               "id":"e1debb3d-8604-4b55-989c-3b61a1ac867c",
+               "name":"ezCater",
+               "color":"blue"
+            }
+         },
+         "Enviado msg Driver":{
+            "id":"etlC",
+            "type":"date",
+            "date":null
+         },
+         "Data do pagamento - RESTAURANTE":{
+            "id":"ew%3EA",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Delivery Day ":{
+            "id":"expr",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":38.09
+            }
+         },
+         "SD Pickup Phone number":{
+            "id":"e~y%5C",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"phone_number",
+                     "phone_number":"(617) 523-1373"
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "ezCater Mensagem":{
+            "id":"fXKR",
+            "type":"rich_text",
+            "rich_text":[
+               {
+                  "type":"text",
+                  "text":{
+                     "content":"Aguarde, processando . . .",
+                     "link":null
+                  },
+                  "annotations":{
+                     "bold":false,
+                     "italic":false,
+                     "strikethrough":false,
+                     "underline":false,
+                     "code":false,
+                     "color":"default"
+                  },
+                  "plain_text":"Aguarde, processando . . .",
+                  "href":null
+               }
+            ]
+         },
+         "Pickup Message":{
+            "id":"faHw",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Shipday Status":{
+            "id":"gE%40h",
+            "type":"select",
+            "select":null
+         },
+         "Driver Extra Exp":{
+            "id":"gc%40S",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":1
+            }
+         },
+         "Valor Driver Manual":{
+            "id":"hNhy",
+            "type":"checkbox",
+            "checkbox":true
+         },
+         "Order-uuid-ezcater":{
+            "id":"hXNW",
+            "type":"rich_text",
+            "rich_text":[
+               {
+                  "type":"text",
+                  "text":{
+                     "content":"bccb2d3f-617d-4700-9d20-289046513e05",
+                     "link":null
+                  },
+                  "annotations":{
+                     "bold":false,
+                     "italic":false,
+                     "strikethrough":false,
+                     "underline":false,
+                     "code":false,
+                     "color":"default"
+                  },
+                  "plain_text":"bccb2d3f-617d-4700-9d20-289046513e05",
+                  "href":null
+               }
+            ]
+         },
+         "Driver Day of Payment":{
+            "id":"iwQg",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Rua_restaurante_eta":{
+            "id":"jv%60c",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Lista de Itens:":{
+            "id":"jx%3Cq",
+            "type":"rich_text",
+            "rich_text":[
+               {
+                  "type":"text",
+                  "text":{
+                     "content":"⚠️ READ & APPLY — Please ensure no olives are included in the Veggie Pizza and Garden Salad. [LER E APLICAR — Por favor, garantir que não haja azeitonas na Pizza Vegetariana e na Salada.]\n\n➕ Standalone Items [Itens Avulsos]\n\n 3x Pepperoni Pizza [3x Pizza de Pepperoni]\n\n 3x Cheese Pizza [3x Pizza de Mussarela]\n\n 2x Chicken Ranch Pizza [2x Pizza de Frango Ranch]\n\n 2x Buffalo Chicken Pizza [2x Pizza de Frango Buffalo]\n\n 1x Veggie Pizza [1x Pizza Vegetariana]\n\n📦 Tray of Garden Salad — Breakdown (3 people) [Detalhamento (3 pessoas)]\n\n 🍟 Sides — Garden Salad (3 servings) [Acompanhamentos — Salada de Jardim (3 porções)]\n\n🍽️ Tableware [Utensílios de Mesa]\n\n 🍽️ 1x Plates [1x Pratos]\n\n 🧻 1x Napkins [1x Guardanapos]\n\n 🍴 1x Utensils [1x Utensílios]",
+                     "link":null
+                  },
+                  "annotations":{
+                     "bold":false,
+                     "italic":false,
+                     "strikethrough":false,
+                     "underline":false,
+                     "code":false,
+                     "color":"default"
+                  },
+                  "plain_text":"⚠️ READ & APPLY — Please ensure no olives are included in the Veggie Pizza and Garden Salad. [LER E APLICAR — Por favor, garantir que não haja azeitonas na Pizza Vegetariana e na Salada.]\n\n➕ Standalone Items [Itens Avulsos]\n\n 3x Pepperoni Pizza [3x Pizza de Pepperoni]\n\n 3x Cheese Pizza [3x Pizza de Mussarela]\n\n 2x Chicken Ranch Pizza [2x Pizza de Frango Ranch]\n\n 2x Buffalo Chicken Pizza [2x Pizza de Frango Buffalo]\n\n 1x Veggie Pizza [1x Pizza Vegetariana]\n\n📦 Tray of Garden Salad — Breakdown (3 people) [Detalhamento (3 pessoas)]\n\n 🍟 Sides — Garden Salad (3 servings) [Acompanhamentos — Salada de Jardim (3 porções)]\n\n🍽️ Tableware [Utensílios de Mesa]\n\n 🍽️ 1x Plates [1x Pratos]\n\n 🧻 1x Napkins [1x Guardanapos]\n\n 🍴 1x Utensils [1x Utensílios]",
+                  "href":null
+               }
+            ]
+         },
+         "Created time":{
+            "id":"lHo_",
+            "type":"created_time",
+            "created_time":"2025-11-30T23:24:00.000Z"
+         },
+         "ETA":{
+            "id":"l%5D%60%60",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Driver Extra Big Order":{
+            "id":"menp",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":0
+            }
+         },
+         "ETA para Cliente em minutos":{
+            "id":"m%7CtK",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":8.7
+            }
+         },
+         "Enviar ezCater":{
+            "id":"nU%3Al",
+            "type":"button",
+            "button":{
+               
+            }
+         },
+         "👥 Custumer Name: ":{
+            "id":"nYTo",
+            "type":"relation",
+            "relation":[
+               {
+                  "id":"254e8d38-9ad5-80fd-a5fe-e19aca1c6c3e"
+               }
+            ],
+            "has_more":false
+         },
+         "Processamento-controle":{
+            "id":"niNk",
+            "type":"number",
+            "number":null
+         },
+         "Enviar SHIPDAY":{
+            "id":"nwNQ",
+            "type":"button",
+            "button":{
+               
+            }
+         },
+         "Get Info Shipday ":{
+            "id":"oJv%3E",
+            "type":"button",
+            "button":{
+               
+            }
+         },
+         "❌ Deslocamento minutos":{
+            "id":"oQ%5Cc",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":6.9399999999999995
+            }
+         },
+         "❌ Tempo Total Minutos":{
+            "id":"qrr%7D",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":18.84
+            }
+         },
+         "Pick-up Longitude":{
+            "id":"qwfY",
+            "type":"rollup",
+            "rollup":{
+               "type":"array",
+               "array":[
+                  {
+                     "type":"number",
+                     "number":-71.05581839999999
+                  }
+               ],
+               "function":"show_original"
+            }
+         },
+         "Formula Payment Driver":{
+            "id":"q%7D%5Ea",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":33.565
+            }
+         },
+         "Manual Driver Tip  ":{
+            "id":"rY%5Dw",
+            "type":"number",
+            "number":20
+         },
+         "PDF Pedido ":{
+            "id":"sNjT",
+            "type":"files",
+            "files":[
+               
+            ]
+         },
+         "Last edited by":{
+            "id":"sZ%3F%5B",
+            "type":"last_edited_by",
+            "last_edited_by":{
+               "object":"user",
+               "id":"299d872b-594c-8121-a05c-00023e7e3d9d",
+               "name":"Evelina Cueva L.",
+               "avatar_url":null,
+               "type":"person",
+               "person":{
+                  "email":"evelinacueva1@gmail.com"
+               }
+            }
+         },
+         "Movimentações":{
+            "id":"tBX%3F",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "Instruçōes Shipday":{
+            "id":"tePR",
+            "type":"formula",
+            "formula":{
+               "type":"string",
+               "string":null
+            }
+         },
+         "Checklist Pedidos Restaurant El Jefes 2":{
+            "id":"tl%60X",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "Carregamento Formula Final":{
+            "id":"tvDF",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":5.95
+            }
+         },
+         "Tracking Status":{
+            "id":"t%7D%3Bq",
+            "type":"select",
+            "select":{
+               "id":"1b0db4b5-ed09-4758-ae60-288ca60d5e87",
+               "name":"7. Foto",
+               "color":"pink"
+            }
+         },
+         "Driver caminho Pickup":{
+            "id":"uEFI",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T10:27:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "11. Calcular Pickup Time":{
+            "id":"us%3DS",
+            "type":"button",
+            "button":{
+               
+            }
+         },
+         "Notication2H":{
+            "id":"vPyl",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Tipo Item:":{
+            "id":"vXtd",
+            "type":"select",
+            "select":null
+         },
+         "🍽️  Restaurant:":{
+            "id":"vuTE",
+            "type":"relation",
+            "relation":[
+               {
+                  "id":"230e8d38-9ad5-8044-9f6d-c2c471591e84"
+               }
+            ],
+            "has_more":false
+         },
+         "9. $$Total of Order Bruto":{
+            "id":"zSi%3C",
+            "type":"number",
+            "number":380.85
+         },
+         "OBS":{
+            "id":"zZyf",
+            "type":"rich_text",
+            "rich_text":[
+               
+            ]
+         },
+         "Real chegada cliente":{
+            "id":"z_M%60",
+            "type":"date",
+            "date":{
+               "start":"2025-12-01T11:06:00.000-05:00",
+               "end":null,
+               "time_zone":null
+            }
+         },
+         "Auto-chegada-restaurante":{
+            "id":"z%7DDu",
+            "type":"date",
+            "date":null
+         },
+         "Checklist Pedidos Restaurant El Jefes 3":{
+            "id":"%7B%3D%5BE",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "Auto-saida-restaurante":{
+            "id":"%7BMoo",
+            "type":"date",
+            "date":null
+         },
+         "Driver-Confirmado":{
+            "id":"%7BRwL",
+            "type":"number",
+            "number":null
+         },
+         "Driver Total Oficial:":{
+            "id":"%7BWm%3F",
+            "type":"formula",
+            "formula":{
+               "type":"number",
+               "number":25
+            }
+         },
+         "Checklist Pedidos Restaurant El Jefes":{
+            "id":"%7B~JW",
+            "type":"relation",
+            "relation":[
+               
+            ],
+            "has_more":false
+         },
+         "Planejado chegado restaurante":{
+            "id":"%7CRwV",
+            "type":"formula",
+            "formula":{
+               "type":"date",
+               "date":{
+                  "start":"2025-12-01T10:56:00.000-05:00",
+                  "end":null,
+                  "time_zone":null
+               }
+            }
+         },
+         "Planejado saída restaurante":{
+            "id":"%7CTlp",
+            "type":"formula",
+            "formula":{
+               "type":"date",
+               "date":{
+                  "start":"2025-12-01T11:01:00.000-05:00",
+                  "end":null,
+                  "time_zone":null
+               }
+            }
+         },
+         "Alert Box 1 Code":{
+            "id":"%7D%3C_d",
+            "type":"number",
+            "number":1
+         },
+         "Driver Payment Status":{
+            "id":"~Y%3C%5E",
+            "type":"select",
+            "select":null
+         },
+         "Order Number: ":{
+            "id":"title",
+            "type":"title",
+            "title":[
+               {
+                  "type":"text",
+                  "text":{
+                     "content":"EZCATER#JF1-940",
+                     "link":null
+                  },
+                  "annotations":{
+                     "bold":false,
+                     "italic":false,
+                     "strikethrough":false,
+                     "underline":false,
+                     "code":false,
+                     "color":"default"
+                  },
+                  "plain_text":"EZCATER#JF1-940",
+                  "href":null
+               }
+            ]
+         }
+      },
+      "url":"https://www.notion.so/EZCATER-JF1-940-2bbe8d389ad581c2862cf763edb49798",
+      "public_url":null
+   }
+]

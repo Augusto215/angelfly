@@ -309,7 +309,7 @@
     let CURRENT_DRIVER_MATCH_ID = null;
     let CURRENT_ROWS = [];
     let CURRENT_WEEK_LABEL = "";
-    let CURRENT_WEEK_START_DAY = 1; // default Monday
+    let CURRENT_WEEK_START_DAY = 0; // default Monday
 
     // -----------------------------
     // DEBUG helpers
@@ -491,39 +491,46 @@
         logDebug("Report status:", res.status);
 
         const text = await res.text();
-        logDebug("Raw response text:", text.slice(0,1000));
+let data;
 
-        let data;
-        try { data = JSON.parse(text); } catch(e){ throw new Error("Resposta inválida do servidor"); }
+try {
+  data = JSON.parse(text);
+} catch {
+  throw new Error("Resposta inválida do servidor");
+}
 
-        let rawList = [];
-        if (Array.isArray(data)) rawList = data;
-        else if (data?.items && Array.isArray(data.items)) rawList = data.items;
-        else if (data?.object === "page") rawList = [data];
-        else if (data?.json?.object === "page") rawList = [data.json];
+/**
+ * 🔥 NOVO FORMATO DO BACKEND (IGUAL RESTAURANT)
+ * [
+ *   {
+ *     driver_id,
+ *     week_start,
+ *     week_end,
+ *     total_orders,
+ *     orders: [
+ *       { order_number, customer_name, day, value }
+ *     ]
+ *   }
+ * ]
+ */
+if (!Array.isArray(data) || !data.length || !Array.isArray(data[0].orders)) {
+  console.warn("Formato inesperado:", data);
+  CURRENT_ROWS = [];
+  renderTableRows([], weekLabel);
+  return;
+}
 
-        const pages = rawList.map(x => x?.json ?? x);
-        logDebug("Items returned:", pages.length);
+const orders = data[0].orders;
 
-        const norm = pages.map(normalizeDriverOrder);
+CURRENT_ROWS = orders.map(o => ({
+  code: o.order_number || "--",
+  day: o.day || "--",                 // 🔥 já vem MM-DD-YYYY
+  customer: o.customer_name || "--",
+  value: Number(o.value || 0)
+}));
 
-        // filter by createdISO in range [weekStart, weekEnd]
-        const startD = new Date(weekStart);
-        const endD = new Date(weekEnd);
-        endD.setDate(endD.getDate() + 1); // exclusive upper bound
-
-        const filtered = norm.filter(r => {
-          if(!r.createdISO) return false;
-          const d = new Date(r.createdISO);
-          return d >= startD && d < endD;
-        });
-
-        filtered.sort((a,b) => (b.created_ts||0) - (a.created_ts||0));
-
-        CURRENT_ROWS = filtered.map(o => ({ ...o, value: Number((o.value||0).toFixed(2)) }));
-        CURRENT_WEEK_LABEL = weekLabel;
-
-        renderTableRows(CURRENT_ROWS, weekLabel);
+CURRENT_WEEK_LABEL = weekLabel;
+renderTableRows(CURRENT_ROWS, weekLabel);
       }catch(e){
         console.error(e);
         logDebug("Weekly report error:", e.message || e);

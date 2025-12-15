@@ -8,6 +8,7 @@
     "dev": "nodemon server.js"
   },
   "dependencies": {
+    "@notionhq/client": "^5.4.0",
     "@supabase/supabase-js": "^2.38.0",
     "axios": "^1.13.2",
     "body-parser": "^1.20.2",

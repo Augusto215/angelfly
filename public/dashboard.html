@@ -650,40 +650,36 @@
           throw new Error("Resposta não é JSON válido.");
         }
 
-        let rawList;
-        if (Array.isArray(data)) rawList = data;
-        else if (data?.items && Array.isArray(data.items)) rawList = data.items;
-        else if (data?.object === "page") rawList = [data];
-        else if (data?.json?.object === "page") rawList = [data.json];
-        else rawList = [];
+        // 🔥 NOVO FORMATO: 1 item com orders[]
+if (!Array.isArray(data) || !data.length || !Array.isArray(data[0].orders)) {
+  logDebug("Formato inesperado do relatório:", data);
+  CURRENT_ROWS = [];
+  renderTableRows([], weekLabel);
+  return;
+}
 
-        const pages = rawList.map(x => x?.json ?? x);
-        logDebug("Items returned:", pages.length);
+const orders = data[0].orders;
+logDebug("Orders returned:", orders.length);
 
-        if(pages[0]?.properties){
-          logDebug("First item properties keys:", Object.keys(pages[0].properties));
-        }
-
-        const norm = pages.map(normalizeNotionOrder);
+// agora SIM cada item é um pedido
+const norm = orders.map(o => ({
+  code: o.order_number || "--",
+  day: o.day || "--",
+  customer: o.customer_name || "--",
+  value: Number(o.value || 0),
+  createdISO: o.last_edited_time,
+  created_ts: o.last_edited_time ? new Date(o.last_edited_time).getTime() : 0,
+}));
 
         // só por segurança, filtramos de novo pelo intervalo da semana
-        const startD = new Date(weekStart);
-        const endD = new Date(weekEnd);
-        endD.setDate(endD.getDate() + 1); // [start, end+1)
-
-        const filtered = norm.filter(r => {
-          if(!r.createdISO) return false;
-          const d = new Date(r.createdISO);
-          return d >= startD && d < endD;
-        });
-
+      
         // ordena mais recente -> mais antigo
-        filtered.sort((a, b) => (b.created_ts || 0) - (a.created_ts || 0));
+        norm.sort((a, b) => (b.created_ts || 0) - (a.created_ts || 0));
 
-        CURRENT_ROWS = filtered;
-        CURRENT_WEEK_LABEL = weekLabel;
+CURRENT_ROWS = norm;
+CURRENT_WEEK_LABEL = weekLabel;
 
-        renderTableRows(filtered, weekLabel);
+renderTableRows(norm, weekLabel);
 
       }catch(e){
         console.error(e);
